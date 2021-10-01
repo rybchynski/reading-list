@@ -62,3 +62,14 @@ services:
       - "rl_database"
     ports:
       - "8000:8000"
+
+  app:
+    build: ./app
+    tty: true
+    container_name: rl_app
+    volumes:
+      - "./app:/app"
+    networks:
+      - internal
+    env_file:
+      - .env
