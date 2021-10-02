@@ -16,16 +16,17 @@
             ><i class="material-icons">menu</i></a
           >
           <ul class="left hide-on-med-and-down">
-            <li>
-              <router-link to="/">
-                RL
-              </router-link>
-            </li>
-            <li>
-              <router-link to="/add">
-                Add Book
-              </router-link>
-            </li>
+            <router-link to="/" custom v-slot="{ href, navigate, isActive }">
+              <li @click="navigate" :class="isActive ? 'active' : null">
+                <a :href="href">RL</a>
+              </li>
+            </router-link>
+
+            <router-link to="/add" custom v-slot="{ href, navigate, isActive }">
+              <li @click="navigate" :class="isActive ? 'active' : null">
+                <a :href="href">Add Book</a>
+              </li>
+            </router-link>
           </ul>
         </div>
       </div>
@@ -41,18 +42,22 @@
         </router-link>
       </div>
       <ul>
-        <li>
-          <router-link to="/">
-            <i class="material-icons">home</i>
-            RL
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/add">
-            <i class="material-icons">book</i>
-            Add Book
-          </router-link>
-        </li>
+        <router-link to="/" custom v-slot="{ href, navigate, isActive }">
+          <li @click="navigate" :class="isActive ? 'active' : null">
+            <a :href="href">
+              <i class="material-icons">home</i>
+              RL
+            </a>
+          </li>
+        </router-link>
+        <router-link to="/add" custom v-slot="{ href, navigate, isActive }">
+          <li @click="navigate" :class="isActive ? 'active' : null">
+            <a :href="href">
+              <i class="material-icons">book</i>
+              Add Book
+            </a>
+          </li>
+        </router-link>
       </ul>
       <Button
         buttonClassName="primary"
