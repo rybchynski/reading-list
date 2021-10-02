@@ -4,7 +4,7 @@
       <Navbar />
 
       <main class="app-content">
-        <div class="app-page">
+        <div class="container app-page">
           <router-view />
         </div>
       </main>
