@@ -1,7 +1,7 @@
 <template>
   <button
     class="button"
-    :class="buttonClassName ? 'button-' + buttonClassName : 'button-primary'"
+    :class="buttonClassName ? 'button-' + buttonClassName : null"
   >
     <i class="material-icons" v-if="buttonIcon">{{ buttonIcon }}</i>
     {{ buttonText }}
@@ -10,7 +10,20 @@
 
 <script>
   export default {
-    props: ["buttonClassName", "buttonIcon", "buttonText"],
+    props: {
+      buttonClassName: {
+        type: String,
+        default: "button-primary",
+      },
+      buttonIcon: {
+        type: String,
+        default: "",
+      },
+      buttonText: {
+        type: String,
+        default: "",
+      },
+    },
   };
 </script>
 

@@ -12,7 +12,20 @@
 
 <script>
   export default {
-    props: ["image", "userName", "userEmail"],
+    props: {
+      image: {
+        type: String,
+        default: "",
+      },
+      userName: {
+        type: String,
+        default: "",
+      },
+      userEmail: {
+        type: String,
+        default: "",
+      },
+    },
   };
 </script>
 
