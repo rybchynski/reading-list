@@ -66,12 +66,10 @@ const schema = new Schema({
       ref: 'Category',
     },
   ],
-  authors: [
-    {
-      type: ObjectId,
-      ref: 'Author',
-    },
-  ],
+  author: {
+    type: ObjectId,
+    ref: 'Author',
+  },
 });
 
 module.exports = model('Book', schema);
