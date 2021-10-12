@@ -7,8 +7,8 @@
             <router-link to="/profile">
               <AccountBadge
                 :image="userImage"
-                userName="Joseph"
-                userEmail="jlumarlin@gmail.com"
+                userName="John"
+                userEmail="johndoe@example.com"
               />
             </router-link>
           </div>
@@ -36,8 +36,8 @@
         <router-link to="/profile">
           <AccountBadge
             :image="userImage"
-            userName="Joseph"
-            userEmail="jlumarlin@gmail.com"
+            userName="John"
+            userEmail="johndoe@example.com"
           />
         </router-link>
       </div>
@@ -60,9 +60,10 @@
         </router-link>
       </ul>
       <Button
-        buttonClassName="primary"
+        buttonType="primary"
         buttonText="Sign Out"
         buttonIcon="chevron_right"
+        buttonClassNames="rounded"
       />
     </div>
   </div>
@@ -106,11 +107,6 @@
   button {
     width: 80%;
     margin: 20px auto auto auto;
-
-    &:hover {
-      border: solid $bunting-border-color 1px;
-      padding: 11px 21px;
-    }
   }
 
   #mobile-app i.material-icons {

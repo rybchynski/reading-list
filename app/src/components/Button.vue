@@ -1,7 +1,11 @@
 <template>
   <button
     class="button"
-    :class="buttonClassName ? 'button-' + buttonClassName : null"
+    :class="[
+      buttonType ? 'button-' + buttonType : null,
+      buttonSize ? 'button-' + buttonSize : null,
+      buttonClassNames,
+    ]"
   >
     <i class="material-icons" v-if="buttonIcon">{{ buttonIcon }}</i>
     {{ buttonText }}
@@ -11,9 +15,13 @@
 <script>
   export default {
     props: {
-      buttonClassName: {
+      buttonClassNames: {
+        type: Array,
+        default: () => [],
+      },
+      buttonType: {
         type: String,
-        default: "button-primary",
+        default: "primary",
       },
       buttonIcon: {
         type: String,
@@ -22,6 +30,10 @@
       buttonText: {
         type: String,
         default: "",
+      },
+      buttonSize: {
+        type: String,
+        default: "medium",
       },
     },
   };
@@ -35,8 +47,8 @@
     color: white;
     padding: 10px 20px;
     border: 2px solid $bunting-border-color;
-    border-radius: 20px;
     cursor: pointer;
+    margin-bottom: 1px;
 
     &-primary {
       background-color: $deep-sky-blue;
@@ -51,8 +63,34 @@
       background-color: $coral;
     }
 
+    &-medium {
+      padding: 10px 20px;
+    }
+
+    &-small {
+      border: solid $bunting-border-color 1px;
+      padding: 5px 10px;
+      font-size: 0.8rem;
+    }
+
+    &.rounded {
+      border-radius: 20px;
+    }
+
     i {
       margin-right: 10px;
+    }
+
+    &:hover {
+      border: solid $bunting-border-color 1px;
+      padding: 11px 21px;
+    }
+  }
+
+  .button-small {
+    &:hover {
+      border: solid $bunting-border-color 2px;
+      padding: 4px 9px;
     }
   }
 </style>
