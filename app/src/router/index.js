@@ -17,9 +17,23 @@ const routes = [
   {
     path: "/profile",
     name: "Profile",
-    meta: { layout: "main" },
+    meta: { layout: "pure" },
     component: () =>
       import(/* webpackChunkName: "home" */ "../views/user/Profile.vue"),
+  },
+  {
+    path: "/books/:id",
+    name: "ViewBook",
+    meta: { layout: "main" },
+    component: () =>
+      import(/* webpackChunkName: "home" */ "@/components/books/ViewBook.vue"),
+  },
+  {
+    path: "/books/:id/edit",
+    name: "EditBook",
+    meta: { layout: "main" },
+    component: () =>
+      import(/* webpackChunkName: "home" */ "@/components/books/EditBook.vue"),
   },
 ];
 
