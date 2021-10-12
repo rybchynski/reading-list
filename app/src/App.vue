@@ -8,16 +8,18 @@
 
 <script>
   import MainLayout from "@/layouts/MainLayout";
+  import PureLayout from "@/layouts/PureLayout";
 
   export default {
     computed: {
       layout() {
-        return (this.$route.meta.layout || "empty") + "-layout";
+        return (this.$route.meta.layout || "pure") + "-layout";
       },
     },
 
     components: {
       MainLayout,
+      PureLayout,
     },
   };
 </script>

@@ -14,6 +14,7 @@
 
 <script>
   import Navbar from "@/components/app/Navbar";
+
   export default {
     name: "main-layout",
     components: {
