@@ -1,12 +1,8 @@
 <template>
-  <div class="home">
-    <h1 class="center-align">Reading List</h1>
+  <div class="list-page-wrapper">
+    <h1 class="center-align page_title">{{ config.name }}</h1>
     <div class="row">
       <div class="col m6 s12 switchers">
-        <!-- <div class="description"> -->
-        <!-- TODO: move description to the popup with skipping function. -->
-        <!-- <p>{{ description }}</p> -->
-        <!-- </div> -->
         <div class="view-modes">
           <p>Card view mode</p>
           <div class="switch">
@@ -66,23 +62,40 @@
       </div>
     </div>
 
-    <div class="reading-list">
+    <div class="reading-list" v-if="viewMode === 'card-view'">
       <component :is="viewMode" :books="filterWithText"></component>
     </div>
+    <!-- Passing additional props in case with table-view -->
+    <div class="reading-list" v-else>
+      <component
+        :is="viewMode"
+        :items="filterWithText"
+        :columns="columns"
+        :actions="actions"
+        :config="config"
+        @onEdit="handleEdit"
+        @onView="handleView"
+        @onDelete="handleDelete"
+      ></component>
+    </div>
+    <floating-button icon="add" @onClick="addBookHandler" />
   </div>
 </template>
 
 <script>
   import { mapGetters, mapActions } from "vuex";
-  import TableView from "@/components/books/TableView.vue";
+  import TableView from "@/components/TableView.vue";
   import CardView from "@/components/books/CardView.vue";
+  import FloatingButton from "@/components/FloatingButton.vue";
   import M from "materialize-css";
+  import { actions, config, columns } from "@/components/books/setup.js";
 
   export default {
     name: "Home",
     components: {
       TableView,
       CardView,
+      FloatingButton,
     },
     data() {
       return {
@@ -94,6 +107,9 @@
         findText: "",
         viewMode: "table-view",
         useFilter: localStorage.getItem("useFilter") === "true" || false,
+        actions,
+        columns,
+        config,
       };
     },
     computed: {
@@ -138,6 +154,19 @@
       getUseFilter() {
         this.useFilter = localStorage.getItem("useFilter") === "true" || false;
       },
+      handleEdit({ id }) {
+        this.$router.push(`/books/${id}/edit`);
+      },
+      handleView({ id }) {
+        this.$router.push(`/books/${id}`);
+      },
+      handleDelete({ id }) {
+        // TODO: implement.
+        console.log(id);
+      },
+      addBookHandler() {
+        this.$router.push("/books/add");
+      },
     },
     mounted() {
       this.fetchBooks();
@@ -149,17 +178,8 @@
 </script>
 
 <style lang="scss" scoped>
-  .description {
-    border: 1px solid #141a46;
-    border-radius: 10px;
-    padding: 10px 20px;
-    text-align: justify;
-    background-color: aliceblue;
-  }
-
   .switchers {
     display: flex;
-    height: 160px;
     align-items: flex-end;
     text-transform: uppercase;
 
