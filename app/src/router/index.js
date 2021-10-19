@@ -1,4 +1,7 @@
-import { createRouter, createWebHistory } from "vue-router";
+import Vue from "vue";
+import VueRouter from "vue-router";
+
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -8,18 +11,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "home" */ "../views/Home.vue"),
   },
   {
-    path: "/add",
+    path: "/books/add",
     name: "AddBook",
     meta: { layout: "main" },
     component: () =>
       import(/* webpackChunkName: "home" */ "../views/AddBook.vue"),
-  },
-  {
-    path: "/profile",
-    name: "Profile",
-    meta: { layout: "pure" },
-    component: () =>
-      import(/* webpackChunkName: "home" */ "../views/user/Profile.vue"),
   },
   {
     path: "/books/:id",
@@ -35,10 +31,46 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "home" */ "@/components/books/EditBook.vue"),
   },
+  {
+    path: "/profile",
+    name: "Profile",
+    meta: { layout: "pure" },
+    component: () =>
+      import(/* webpackChunkName: "home" */ "../views/user/Profile.vue"),
+  },
+
+  {
+    path: "/categories",
+    name: "Categories",
+    meta: { layout: "main" },
+    component: () =>
+      import(
+        /* webpackChunkName: "home" */ "@/components/categories/Categories.vue"
+      ),
+  },
+  {
+    path: "/categories/:id/edit",
+    name: "EditCategory",
+    meta: { layout: "main" },
+    component: () =>
+      import(
+        /* webpackChunkName: "home" */ "@/components/categories/form/index.vue"
+      ),
+  },
+  {
+    path: "/categories/add",
+    name: "AddCategory",
+    meta: { layout: "main" },
+    component: () =>
+      import(
+        /* webpackChunkName: "home" */ "@/components/categories/form/index.vue"
+      ),
+  },
 ];
 
-const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+const router = new VueRouter({
+  mode: "history",
+  base: process.env.BASE_URL,
   routes,
 });
 

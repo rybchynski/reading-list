@@ -1,9 +1,15 @@
-import { getCategory, getCategories } from "@/services/category.service";
+import {
+  getCategory,
+  getCategories,
+  updateCategory,
+  createCategory,
+  deleteCategory,
+} from "@/services/category.service";
 
 const state = () => ({
   category: {},
   categories: [],
-  fetchCategoryError: null,
+  categoryError: null,
 });
 
 const mutations = {
@@ -13,8 +19,17 @@ const mutations = {
   setCategories(state, categories) {
     state.categories = categories;
   },
-  setFetchCategoryError(state, error) {
-    state.fetchCategoryError = error;
+  setCategoryError(state, error) {
+    state.categoryError = error;
+  },
+  updateCategorySuccess(state, category) {
+    state.category = category;
+  },
+  createCategorySuccess(state, category) {
+    state.category = category;
+  },
+  deleteCategorySuccess(state, category) {
+    state.category = category;
   },
 };
 
@@ -24,7 +39,10 @@ const actions = {
       const category = await getCategory(id);
       commit("setCategory", category);
     } catch (err) {
-      commit("setFetchCategoryError", err);
+      commit("setCategoryError", {
+        errorType: "fetch category failed",
+        err,
+      });
     }
   },
 
@@ -33,7 +51,47 @@ const actions = {
       const categories = await getCategories();
       commit("setCategories", categories);
     } catch (err) {
-      commit("setFetchCategoryError", err);
+      commit("setCategoryError", {
+        errorType: "fetch categories failed",
+        err,
+      });
+    }
+  },
+
+  async updateCategory({ commit }, { id, data }) {
+    try {
+      const category = await updateCategory(id, data);
+      commit("updateCategorySuccess", category);
+    } catch (err) {
+      commit("setCategoryError", {
+        errorType: "update category failed",
+        err,
+      });
+    }
+  },
+
+  async createCategory({ commit }, { data }) {
+    try {
+      const category = await createCategory(data);
+      commit("createCategorySuccess", category);
+    } catch (err) {
+      commit("setCategoryError", {
+        errorType: "create category failed",
+        err,
+      });
+    }
+  },
+
+  async deleteCategory({ commit }, id) {
+    try {
+      const category = await deleteCategory(id);
+      commit("deleteCategorySuccess", category);
+      // TODO: add popup message here.
+    } catch (err) {
+      commit("setCategoryError", {
+        errorType: "category delete failed",
+        err,
+      });
     }
   },
 };
@@ -41,7 +99,7 @@ const actions = {
 const getters = {
   category: ({ category }) => category,
   categories: ({ categories }) => categories,
-  fetchCategoryError: ({ fetchCategoryError }) => fetchCategoryError,
+  categoryError: ({ categoryError }) => categoryError,
 };
 
 export default {

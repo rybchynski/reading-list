@@ -1,9 +1,12 @@
-import { createStore } from "vuex";
+import Vue from "vue";
+import Vuex from "vuex";
 import author from "./author";
 import book from "./book";
 import category from "./category";
 
-export default createStore({
+Vue.use(Vuex);
+
+export default new Vuex.Store({
   modules: {
     author,
     book,
