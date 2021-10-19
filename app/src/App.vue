@@ -13,7 +13,7 @@
   export default {
     computed: {
       layout() {
-        return (this.$route.meta.layout || "pure") + "-layout";
+        return (this.$route.meta.layout || "main") + "-layout";
       },
     },
 
@@ -29,5 +29,14 @@
 
   body {
     font-family: "Montserrat", sans-serif;
+  }
+
+  .list-page-wrapper {
+    margin-top: 80px;
+  }
+
+  .page_title {
+    text-transform: uppercase;
+    font-size: 30px;
   }
 </style>
