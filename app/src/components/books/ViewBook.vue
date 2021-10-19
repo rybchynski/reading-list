@@ -7,17 +7,17 @@
 </template>
 
 <script>
-  import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
-  export default {
-    computed: { ...mapGetters(["book"]) },
-    methods: {
-      ...mapActions({ fetchBook: "fetchBook" }),
-    },
-    mounted() {
-      this.fetchBook(this.$route.params.id);
-    },
-  };
+export default {
+  computed: { ...mapGetters(["book"]) },
+  methods: {
+    ...mapActions({ fetchBook: "fetchBook" }),
+  },
+  mounted() {
+    this.fetchBook(this.$route.params.id);
+  },
+};
 </script>
 
 <style lang="scss" scoped></style>

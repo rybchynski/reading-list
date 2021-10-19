@@ -1,11 +1,13 @@
 <template>
   <button
-    class="button"
+    class="btn button"
+    :disabled="disabled"
     :class="[
       buttonType ? 'button-' + buttonType : null,
       buttonSize ? 'button-' + buttonSize : null,
       buttonClassNames,
     ]"
+    @click="$emit('click')"
   >
     <i class="material-icons" v-if="buttonIcon">{{ buttonIcon }}</i>
     {{ buttonText }}
@@ -16,8 +18,8 @@
   export default {
     props: {
       buttonClassNames: {
-        type: Array,
-        default: () => [],
+        type: String,
+        default: "",
       },
       buttonType: {
         type: String,
@@ -34,6 +36,10 @@
       buttonSize: {
         type: String,
         default: "medium",
+      },
+      disabled: {
+        type: Boolean,
+        default: false,
       },
     },
   };

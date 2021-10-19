@@ -16,15 +16,26 @@
             ><i class="material-icons">menu</i></a
           >
           <ul class="left hide-on-med-and-down">
-            <router-link to="/" custom v-slot="{ href, navigate, isActive }">
+            <router-link
+              to="/"
+              custom
+              v-slot="{ href, navigate, isActive }"
+              exact
+            >
               <li @click="navigate" :class="isActive ? 'active' : null">
-                <a :href="href">RL</a>
+                <a :href="href">
+                  <i class="material-icons">home</i>
+                </a>
               </li>
             </router-link>
-
-            <router-link to="/add" custom v-slot="{ href, navigate, isActive }">
+            <router-link
+              to="/categories"
+              custom
+              v-slot="{ href, navigate, isActive }"
+              exact
+            >
               <li @click="navigate" :class="isActive ? 'active' : null">
-                <a :href="href">Add Book</a>
+                <a :href="href"> Categories </a>
               </li>
             </router-link>
           </ul>
@@ -46,15 +57,19 @@
           <li @click="navigate" :class="isActive ? 'active' : null">
             <a :href="href">
               <i class="material-icons">home</i>
-              RL
+              Home
             </a>
           </li>
         </router-link>
-        <router-link to="/add" custom v-slot="{ href, navigate, isActive }">
+        <router-link
+          to="/categories"
+          custom
+          v-slot="{ href, navigate, isActive }"
+        >
           <li @click="navigate" :class="isActive ? 'active' : null">
             <a :href="href">
-              <i class="material-icons">book</i>
-              Add Book
+              <i class="material-icons">apps</i>
+              Catagories
             </a>
           </li>
         </router-link>

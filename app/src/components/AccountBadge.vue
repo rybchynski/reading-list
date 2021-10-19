@@ -11,65 +11,65 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      image: {
-        type: String,
-        default: "",
-      },
-      userName: {
-        type: String,
-        default: "",
-      },
-      userEmail: {
-        type: String,
-        default: "",
-      },
+export default {
+  props: {
+    image: {
+      type: String,
+      default: "",
     },
-  };
+    userName: {
+      type: String,
+      default: "",
+    },
+    userEmail: {
+      type: String,
+      default: "",
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-  .account-info {
-    height: 64px;
+.account-info {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  color: black;
+  line-height: 64px;
+  margin: 0;
+
+  img {
+    height: 40px;
+    width: 40px;
+    border: 2px white solid;
+    border-radius: 5px;
+  }
+
+  .account-info--main {
+    height: 80%;
+    border: 2px solid $bunting-border-color;
+    border-radius: 10px;
+    padding: 5px 20px;
     display: flex;
     align-items: center;
-    color: black;
-    line-height: 64px;
-    margin: 0;
+  }
 
-    img {
-      height: 40px;
-      width: 40px;
-      border: 2px white solid;
-      border-radius: 5px;
-    }
+  .account-info--meta {
+    display: flex;
+    flex-direction: column;
+    float: right;
+    margin-left: 10px;
 
-    .account-info--main {
-      height: 80%;
-      border: 2px solid $bunting-border-color;
-      border-radius: 10px;
-      padding: 5px 20px;
-      display: flex;
-      align-items: center;
-    }
+    span {
+      line-height: 15px;
+      font-size: 12px;
+      font-weight: 400;
+      font-family: "Montserrat", sans-serif;
 
-    .account-info--meta {
-      display: flex;
-      flex-direction: column;
-      float: right;
-      margin-left: 10px;
-
-      span {
-        line-height: 15px;
-        font-size: 12px;
-        font-weight: 400;
-        font-family: "Montserrat", sans-serif;
-
-        &.user-name {
-          font-weight: 600;
-        }
+      &.user-name {
+        font-weight: 600;
       }
     }
   }
+}
 </style>

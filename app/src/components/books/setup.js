@@ -26,6 +26,7 @@ export const actions = [
   {
     className: " rounded small",
     label: "Edit",
+    // onEdit, onView, onDelete.
     emit: "onEdit",
     actionKey: "_id",
   },
@@ -38,5 +39,8 @@ export const actions = [
 ];
 
 export const config = {
-  name: "Books table view",
+  name: "Books",
+  singleName: "Book",
+  tableDescription: "The list of existing books.",
+  formDescription: "You can use this form for create/update a book.",
 };

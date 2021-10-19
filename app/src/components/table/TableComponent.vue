@@ -37,8 +37,9 @@
           </table-cell>
           <table-cell :additionalClasses="`actions`">
             <Button
-              v-for="({ className, emit, actionKey, label },
-              actionIndex) in actions"
+              v-for="(
+                { className, emit, actionKey, label }, actionIndex
+              ) in actions"
               :key="`action-${actionIndex}`"
               :class="className"
               @click="$emit(emit, { id: item[actionKey] })"
@@ -48,7 +49,14 @@
           </table-cell>
         </slot>
       </tr>
-      <tr v-if="withTotal">
+      <tr
+        v-if="withTotal"
+        style="
+          background-color: transparent;
+          border-top: solid 1px rgb(178, 179, 187);
+        "
+        class="hide-on-med-and-down"
+      >
         <table-cell>
           <span class="total">Total: {{ data.length }}</span>
         </table-cell>

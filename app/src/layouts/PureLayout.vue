@@ -11,9 +11,9 @@
 </template>
 
 <script>
-  export default {
-    name: "pure-layout",
-  };
+export default {
+  name: "pure-layout",
+};
 </script>
 
 <style lang="scss" scoped></style>
