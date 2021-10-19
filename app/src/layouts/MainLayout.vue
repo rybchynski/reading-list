@@ -13,14 +13,18 @@
 </template>
 
 <script>
-  import Navbar from "@/components/app/Navbar";
+import Navbar from "@/components/app/Navbar";
 
-  export default {
-    name: "main-layout",
-    components: {
-      Navbar,
-    },
-  };
+export default {
+  name: "main-layout",
+  components: {
+    Navbar,
+  },
+};
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.app-main-layout {
+  height: 100vh;
+}
+</style>
