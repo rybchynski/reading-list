@@ -32,19 +32,32 @@
       columns,
     }),
     computed: {
-      ...mapGetters(["categories"]),
+      ...mapGetters(["categories", "category"]),
     },
     methods: {
       ...mapActions({
         fetchCategories: "fetchCategories",
         deleteCategory: "deleteCategory",
+        fetchCategory: "fetchCategory"
       }),
       handleEdit({ id }) {
         this.$router.push(`/categories/${id}/edit`);
       },
-      handleDelete({ id }) {
-        this.deleteCategory(id);
-        this.fetchCategories();
+     async handleDelete({ id }) {
+        await this.fetchCategory(id)
+        this.$confirm({
+          title: "Warning",
+          message: `Are you sure you want to delete <span class="confirm-item-name">"${this.category.name}"</span> category?`,
+          confirm: "Sure",
+          cancel: 'No way',
+        })
+          .then(res => {
+            if (res) {
+               this.deleteCategory(id);
+               this.fetchCategories();
+               // TODO: add tooltip here.
+            }
+          })
       },
       addCategoryHandler() {
         this.$router.push(`/categories/add`);

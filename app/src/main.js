@@ -4,12 +4,14 @@ import router from "./router";
 import store from "./store";
 import VueFormGenerator from "vue-form-generator";
 import "vue-form-generator/dist/vfg.css";
+import notivuecation from 'notivuecation'
 
 Vue.config.productionTip = false;
 Vue.use(VueFormGenerator);
+Vue.use(notivuecation);
 
 new Vue({
-  router,
-  store,
-  render: (h) => h(App),
+    router,
+    store,
+    render: (h) => h(App),
 }).$mount("#app");

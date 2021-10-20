@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <notivuecation />
     <component :is="layout">
       <router-view />
     </component>
@@ -38,5 +39,42 @@
   .page_title {
     text-transform: uppercase;
     font-size: 30px;
+  }
+
+  .notivuecation-overlay {
+    .notivuecation-content {
+      h3 {
+        color: grey;
+        text-transform: uppercase;
+        font-size: 25px;
+      }
+      .confirm-item-name {
+        background-color: yellow;
+      }
+    }
+    .notivuecation-buttons {
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        padding: 10px 20px;
+        border: 2px solid $bunting-border-color;
+        cursor: pointer;
+        margin-bottom: 1px;
+        border-radius: 20px;
+
+        &.confirm {
+          margin-right: 5px;
+          background-color: $deep-sky-blue;
+        }
+        &.cancel {
+          background-color: $coral;
+        }
+      }
+    }
   }
 </style>
