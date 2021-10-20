@@ -55,7 +55,7 @@
             if (res) {
                this.deleteCategory(id);
                this.fetchCategories();
-               // TODO: add tooltip here.
+               this.$info(`Category "${this.category.name}" was deleted.`)
             }
           })
       },
