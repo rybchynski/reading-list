@@ -64,7 +64,6 @@
       async checkFormValidation() {
         const errors = await this.$refs.form.validate();
         this.isValid = errors.length === 0;
-        console.log(errors)
         return this.isValid;
       },
       checkFormAction() {

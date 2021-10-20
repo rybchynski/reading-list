@@ -161,8 +161,8 @@
         this.$router.push(`/books/${id}`);
       },
       handleDelete({ id }) {
+        console.log(id)
         // TODO: implement.
-        console.log(id);
       },
       addBookHandler() {
         this.$router.push("/books/add");

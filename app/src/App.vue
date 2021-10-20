@@ -77,4 +77,7 @@
       }
     }
   }
+  .toast-error {
+    background-color: red;
+  }
 </style>

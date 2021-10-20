@@ -80,15 +80,19 @@
             data: updatedCategory,
           });
           this.$router.back();
+          this.$info(`Category "${this.model.name}" was successfully updated.`)
         } catch (err) {
           this.error = err;
+          this.$error('Something went wrong.')
         }
       },
       async onCategoryCreate() {
         try {
           await this.createCategory({ data: this.model });
           this.$router.back();
+          this.$info(`Category "${this.model.name}" was created successfully.`)
         } catch (err) {
+          this.$error('Something went wrong.')
           this.error = err;
         }
       },
