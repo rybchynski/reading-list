@@ -23,17 +23,23 @@ export const columns = [
 ];
 
 export const actions = [
-  {
-    className: " rounded small",
-    label: "Edit",
-    // onEdit, onView, onDelete.
-    emit: "onEdit",
-    actionKey: "_id",
-  },
+  // available emits: onEdit, onView, onDelete.
   {
     className: "rounded small",
     label: "View",
     emit: "onView",
+    actionKey: "_id",
+  },
+  {
+    className: " rounded small",
+    label: "Edit",
+    emit: "onEdit",
+    actionKey: "_id",
+  },
+  {
+    className: "rounded small button-danger",
+    label: "Delete",
+    emit: "onDelete",
     actionKey: "_id",
   },
 ];
