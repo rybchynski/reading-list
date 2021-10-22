@@ -86,7 +86,7 @@
   import { mapGetters, mapActions } from "vuex";
   import TableView from "@/components/TableView.vue";
   import CardView from "@/components/books/CardView.vue";
-  import FloatingButton from "@/components/FloatingButton.vue";
+  import FloatingButton from "@/components/ui/FloatingButton.vue";
   import M from "materialize-css";
   import { actions, config, columns } from "@/components/books/setup.js";
 
@@ -113,7 +113,7 @@
       };
     },
     computed: {
-      ...mapGetters(["books"]),
+      ...mapGetters(["books", "book"]),
       filterWithText() {
         let filter = new RegExp(this.findText, "i");
         let fieldName = this.findBy ? this.findBy : "title";
@@ -126,6 +126,8 @@
     methods: {
       ...mapActions({
         fetchBooks: "fetchBooks",
+        fetchBook: "fetchBook",
+        deleteBook: "deleteBook",
       }),
       submitForm(e) {
         e.preventDefault();
@@ -160,9 +162,20 @@
       handleView({ id }) {
         this.$router.push(`/books/${id}`);
       },
-      handleDelete({ id }) {
-        console.log(id)
-        // TODO: implement.
+      async handleDelete({ id }) {
+        await this.fetchBook(id);
+        this.$confirm({
+          title: "Warning",
+          message: `Are you sure you want to delete <span class="confirm-item-name">"${this.book.title}"</span> book?`,
+          confirm: "Sure",
+          cancel: "No way",
+        }).then((res) => {
+          if (res) {
+            this.deleteBook(id);
+            this.fetchBooks();
+            this.$info(`Book "${this.book.title}" was deleted.`);
+          }
+        });
       },
       addBookHandler() {
         this.$router.push("/books/add");

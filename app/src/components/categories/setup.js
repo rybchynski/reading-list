@@ -12,15 +12,15 @@ export const columns = [
 ];
 
 export const actions = [
+  // available emits: onEdit, onView, onDelete.
   {
-    className: " rounded small",
+    className: "rounded small",
     label: "Edit",
-    // onEdit, onView, onDelete.
     emit: "onEdit",
     actionKey: "_id",
   },
   {
-    className: "rounded small",
+    className: "rounded small button-danger",
     label: "Delete",
     emit: "onDelete",
     actionKey: "_id",

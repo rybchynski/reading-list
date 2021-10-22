@@ -16,7 +16,8 @@
 
 <script>
   import Button from "@/components/Button.vue";
-  import FloatingButton from "@/components/FloatingButton.vue";
+  import FloatingButton from "@/components/ui/FloatingButton.vue";
+  import "vue-multiselect/dist/vue-multiselect.min.css";
 
   export default {
     components: {
@@ -45,8 +46,8 @@
       },
       updateAction: {
         type: Boolean,
-        default: true
-      }
+        default: true,
+      },
     },
     methods: {
       validate() {
@@ -67,12 +68,12 @@
         return this.isValid;
       },
       checkFormAction() {
-        this.isValid = this.updateAction
-      }
+        this.isValid = this.updateAction;
+      },
     },
     mounted() {
-      this.checkFormAction()
-    }
+      this.checkFormAction();
+    },
   };
 </script>
 
@@ -92,6 +93,15 @@
       &:focus {
         border: 1px solid $deep-sky-blue !important;
       }
+    }
+
+    input[type="checkbox"] {
+      opacity: 1 !important;
+    }
+
+    .field-checkbox {
+      display: flex;
+      justify-content: flex-start;
     }
   }
 </style>

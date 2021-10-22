@@ -27,4 +27,8 @@ export default {
 .app-main-layout {
   height: 100vh;
 }
+
+.app-page {
+  margin-bottom: 40px;
+}
 </style>

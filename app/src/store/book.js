@@ -1,9 +1,15 @@
-import { getBook, getBooks } from "@/services/book.service";
+import {
+  getBook,
+  getBooks,
+  updateBook,
+  createBook,
+  deleteBook,
+} from "@/services/book.service";
 
 const state = () => ({
   book: {},
   books: [],
-  fetchBookError: null,
+  bookError: null,
 });
 
 const mutations = {
@@ -13,8 +19,17 @@ const mutations = {
   setBooks(state, books) {
     state.books = books;
   },
-  setFetchBookError(state, error) {
-    state.fetchBookError = error;
+  setBookError(state, error) {
+    state.bookError = error;
+  },
+  updateBookSuccess(state, book) {
+    state.book = book;
+  },
+  createBookSuccess(state, book) {
+    state.book = book;
+  },
+  deleteBookSuccess(state, book) {
+    state.book = book;
   },
 };
 
@@ -24,7 +39,10 @@ const actions = {
       const book = await getBook(id);
       commit("setBook", book);
     } catch (err) {
-      commit("setFetchBookError", err);
+      commit("setBookError", {
+        errorType: "fetch book failed",
+        err,
+      });
     }
   },
 
@@ -33,7 +51,46 @@ const actions = {
       const books = await getBooks();
       commit("setBooks", books);
     } catch (err) {
-      commit("setFetchBookError", err);
+      commit("setBookError", {
+        errorType: "fetch books failed",
+        err,
+      });
+    }
+  },
+
+  async updateBook({ commit }, { id, data }) {
+    try {
+      const book = await updateBook(id, data);
+      commit("updateBookSuccess", book);
+    } catch (err) {
+      commit("setBookError", {
+        errorType: "update book failed",
+        err,
+      });
+    }
+  },
+
+  async createBook({ commit }, { data }) {
+    try {
+      const book = await createBook(data);
+      commit("createBookSuccess", book);
+    } catch (err) {
+      commit("setBookError", {
+        errorType: "create book failed",
+        err,
+      });
+    }
+  },
+
+  async deleteBook({ commit }, id) {
+    try {
+      const book = await deleteBook(id);
+      commit("deleteBookSuccess", book);
+    } catch (err) {
+      commit("setBookError", {
+        errorType: "book delete failed",
+        err,
+      });
     }
   },
 };
@@ -41,7 +98,7 @@ const actions = {
 const getters = {
   book: ({ book }) => book,
   books: ({ books }) => books,
-  fetchBookError: ({ fetchBookError }) => fetchBookError,
+  bookError: ({ bookError }) => bookError,
 };
 
 export default {

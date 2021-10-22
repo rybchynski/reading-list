@@ -22,7 +22,7 @@ export default {
 <style lang="scss" scoped>
 a {
   background-color: $deep-sky-blue;
-  position: absolute;
+  position: fixed;
   bottom: 5%;
   right: 5%;
 }
