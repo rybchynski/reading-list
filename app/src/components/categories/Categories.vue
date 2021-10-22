@@ -18,7 +18,7 @@
 <script>
   import { mapGetters, mapActions } from "vuex";
   import TableView from "@/components/TableView.vue";
-  import FloatingButton from "@/components/FloatingButton.vue";
+  import FloatingButton from "@/components/ui/FloatingButton.vue";
   import { config, actions, columns } from "./setup.js";
 
   export default {

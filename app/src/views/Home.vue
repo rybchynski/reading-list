@@ -86,7 +86,7 @@
   import { mapGetters, mapActions } from "vuex";
   import TableView from "@/components/TableView.vue";
   import CardView from "@/components/books/CardView.vue";
-  import FloatingButton from "@/components/FloatingButton.vue";
+  import FloatingButton from "@/components/ui/FloatingButton.vue";
   import M from "materialize-css";
   import { actions, config, columns } from "@/components/books/setup.js";
 
