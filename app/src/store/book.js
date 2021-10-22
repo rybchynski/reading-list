@@ -82,11 +82,10 @@ const actions = {
     }
   },
 
-  async deletebook({ commit }, id) {
+  async deleteBook({ commit }, id) {
     try {
       const book = await deleteBook(id);
       commit("deleteBookSuccess", book);
-      // TODO: add popup message here.
     } catch (err) {
       commit("setBookError", {
         errorType: "book delete failed",

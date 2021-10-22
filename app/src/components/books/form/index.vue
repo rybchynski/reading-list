@@ -40,7 +40,8 @@
       ...mapGetters({
         book: "book",
         error: "bookError",
-        authors: "authors"
+        authors: "authors",
+        categories: "categories",
       }),
       updateAction: ({
         $route: {
@@ -54,12 +55,13 @@
         fetchBook: "fetchBook",
         updateBook: "updateBook",
         createBook: "createBook",
-        fetchAuthors: 'fetchAuthors',
+        fetchAuthors: "fetchAuthors",
+        fetchCategories: "fetchCategories",
       }),
       setModel() {
         this.model = { ...defaultForm };
       },
-      // todo: think of about to move this func to the mixin.
+      // todo: think about to move this func to the mixin.
       setFields({ fieldKey, values = [] }) {
         const foundField = this.schema.fields.find(
           (field) => field.model === fieldKey
@@ -78,6 +80,7 @@
           const updatedBook = {
             ...this.model,
             author: this.model.author._id,
+            categories: this.model.categories.map((category) => category._id),
           };
           await this.updateBook({
             id: this.$route.params.id,
@@ -103,9 +106,10 @@
     },
 
     async mounted() {
-      await this.fetchAuthors()
-      // todo: set fields here.
-      this.setFields({ fieldKey: 'author', values: this.authors })
+      await this.fetchAuthors();
+      await this.fetchCategories();
+      this.setFields({ fieldKey: "author", values: this.authors });
+      this.setFields({ fieldKey: "categories", values: this.categories });
       if (this.updateAction) {
         await this.fetchBook(this.$route.params.id);
         this.model = { ...this.book };
