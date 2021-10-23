@@ -38,6 +38,16 @@
                 <a :href="href"> Categories </a>
               </li>
             </router-link>
+            <router-link
+              to="/authors"
+              custom
+              v-slot="{ href, navigate, isActive }"
+              exact
+            >
+              <li @click="navigate" :class="isActive ? 'active' : null">
+                <a :href="href">Authors</a>
+              </li>
+            </router-link>
           </ul>
         </div>
       </div>
