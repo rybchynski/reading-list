@@ -8,6 +8,7 @@
         :actions="actions"
         :config="config"
         @onEdit="handleEdit"
+        @onView="handleView"
         @onDelete="handleDelete"
       ></table-view>
     </div>
@@ -43,6 +44,10 @@
       handleEdit({ id }) {
         this.$router.push(`/authors/${id}/edit`);
       },
+      handleView({ id }) {
+        this.$router.push(`authors/${id}`)
+      },
+
      async handleDelete({ id }) {
         await this.fetchAuthor(id)
         this.$confirm({
@@ -55,7 +60,7 @@
             if (res) {
                this.deleteAuthor(id);
                this.fetchAuthors();
-               this.$info(`Author "${this.category.name}" was deleted.`)
+               this.$info(`Author "${this.author.name}" was deleted.`)
             }
           })
       },

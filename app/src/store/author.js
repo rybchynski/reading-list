@@ -1,4 +1,4 @@
-import { getAuthor, getAuthors, createAuthor, updateAuthor } from "@/services/author.service";
+import { getAuthor, getAuthors, createAuthor, updateAuthor, deleteAuthor } from "@/services/author.service";
 
 const state = () => ({
   author: {},
@@ -53,7 +53,7 @@ const actions = {
   },
   async createAuthor({ commit }, { data }) {
     try {
-      const author = await createAuthor({ data })
+      const author = await createAuthor(data)
       commit("createAuthorSuccess", author)
     } catch (err) {
       commit('setAuthorError', {
@@ -65,7 +65,7 @@ const actions = {
 
   async updateAuthor({ commit }, { id, data }) {
     try {
-      const author = await updateAuthor({ id, data })
+      const author = await updateAuthor(id, data)
       commit("updateAuthorSuccess", author)
     } catch (err) {
       commit("setAuthorError", {
@@ -73,7 +73,19 @@ const actions = {
         err
       })
     }
-  }
+  },
+
+  async deleteAuthor({ commit }, id) {
+    try {
+      const author = await deleteAuthor(id);
+      commit("deleteAuthorSuccess", author);
+    } catch (err) {
+      commit("setAuthorError", {
+        errorType: "author delete failed",
+        err,
+      });
+    }
+  },
 };
 
 const getters = {

@@ -71,7 +71,31 @@ const routes = [
     name: "Authors",
     meta: { layout: "main" },
     component: () => import(/* webpackChunkName: "authors" */ "@/components/authors/Authors.vue")
-  }
+  },
+  {
+    path: "/authors/add",
+    name: "AddAuthor",
+    meta: { layout: "main" },
+    component: () => import(/* webpackChunkName: "authors" */ "@/components/authors/form/index.vue")
+  },
+  {
+    path: "/authors/:id/edit",
+    name: "EditAuthor",
+    meta: { layout: "main" },
+    component: () =>
+      import(
+        /* webpackChunkName: "home" */ "@/components/authors/form/index.vue"
+      ),
+  },
+  {
+    path: "/authors/:id",
+    name: "ViewAuthor",
+    meta: { layout: "main" },
+    component: () =>
+      import(
+        /* webpackChunkName: "home" */ "@/components/authors/ViewAuthor.vue"
+      ),
+  },
 ];
 
 const router = new VueRouter({
