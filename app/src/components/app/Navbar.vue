@@ -83,6 +83,19 @@
             </a>
           </li>
         </router-link>
+        <router-link
+          to="/authors"
+          custom
+          v-slot="{ href, navigate, isActive }"
+          exact
+        >
+          <li @click="navigate" :class="isActive ? 'active' : null">
+            <a :href="href">
+              <i class="material-icons">person</i>
+              Authors
+            </a>
+          </li>
+        </router-link>
       </ul>
       <Button
         buttonType="primary"
