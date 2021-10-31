@@ -148,6 +148,10 @@
       },
       changeUseFilter() {
         this.useFilter = !this.useFilter;
+        // if we're not using filters -- reset filter input model.
+        if (this.useFilter !== 'true') {
+          this.findText = ''
+        }
         localStorage.setItem("useFilter", this.useFilter);
         setTimeout(() => {
           this.initForm();
