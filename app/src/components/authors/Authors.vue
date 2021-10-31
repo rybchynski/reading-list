@@ -1,16 +1,37 @@
 <template>
   <div class="list-page-wrapper">
     <h3 class="center page_title">{{ config.name }}</h3>
-    <div class="author-list">
-      <table-view
-        :items="authors"
-        :columns="columns"
-        :actions="actions"
-        :config="config"
-        @onEdit="handleEdit"
-        @onView="handleView"
-        @onDelete="handleDelete"
-      ></table-view>
+
+    <div class="row">
+      <div class="col s12">
+        <form @submit.prevent="submitForm">
+          <div class="filter-text">
+            <label for="filterText">Filter:</label>
+            <input
+              type="text"
+              name="filterText"
+              placeholder="Typing here..."
+              v-model="findText"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s12">
+        <div class="author-list">
+          <table-view
+            :items="filteredAuthors"
+            :columns="columns"
+            :actions="actions"
+            :config="config"
+            @onEdit="handleEdit"
+            @onView="handleView"
+            @onDelete="handleDelete"
+          ></table-view>
+        </div>
+      </div>
     </div>
     <floating-button icon="add" @onClick="addAuthorHandler" />
   </div>
@@ -31,9 +52,14 @@
       config,
       actions,
       columns,
+      findText: ''
     }),
     computed: {
       ...mapGetters(["authors", "author"]),
+      filteredAuthors() {
+        let filter = new RegExp(this.findText, "i");
+        return this.authors.filter((e) => e.name.match(filter))
+      }
     },
     methods: {
       ...mapActions({

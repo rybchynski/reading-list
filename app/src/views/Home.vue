@@ -62,10 +62,11 @@
       </div>
     </div>
 
-    <div class="reading-list" v-if="viewMode === 'card-view'">
-      <component :is="viewMode" :books="filterWithText"></component>
-    </div>
-    <!-- Passing additional props in case with table-view -->
+    <div class="row">
+      <div class="col s12">
+        <div class="reading-list" v-if="viewMode === 'card-view'">
+          <component :is="viewMode" :books="filterWithText"></component>
+        </div>
     <div class="reading-list" v-else>
       <component
         :is="viewMode"
@@ -78,6 +79,9 @@
         @onDelete="handleDelete"
       ></component>
     </div>
+      </div>
+    </div>
+    <!-- Passing additional props in case with table-view -->
     <floating-button icon="add" @onClick="addBookHandler" />
   </div>
 </template>

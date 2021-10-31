@@ -1,15 +1,36 @@
 <template>
   <div class="list-page-wrapper">
     <h3 class="center page_title">{{ config.name }}</h3>
-    <div class="category-list">
-      <table-view
-        :items="categories"
-        :columns="columns"
-        :actions="actions"
-        :config="config"
-        @onEdit="handleEdit"
-        @onDelete="handleDelete"
-      ></table-view>
+
+    <div class="row">
+      <div class="col s12">
+        <form @submit.prevent="submitForm">
+          <div class="filter-text">
+            <label for="filterText">Filter:</label>
+            <input
+              type="text"
+              name="filterText"
+              placeholder="Typing here..."
+              v-model="findText"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s12">
+        <div class="category-list">
+          <table-view
+            :items="filteredCategories"
+            :columns="columns"
+            :actions="actions"
+            :config="config"
+            @onEdit="handleEdit"
+            @onDelete="handleDelete"
+          ></table-view>
+        </div>
+      </div>
     </div>
     <floating-button icon="add" @onClick="addCategoryHandler" />
   </div>
@@ -30,9 +51,14 @@
       config,
       actions,
       columns,
+      findText: '',
     }),
     computed: {
       ...mapGetters(["categories", "category"]),
+      filteredCategories() {
+        let filter = new RegExp(this.findText, "i");
+        return this.categories.filter((e) => e.name.match(filter) || e.description.match(filter));
+      }
     },
     methods: {
       ...mapActions({
