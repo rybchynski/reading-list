@@ -2,7 +2,7 @@
   <div class="list-page-wrapper">
     <h1 class="center-align page_title">{{ config.name }}</h1>
     <div class="row">
-      <div class="col m6 s12 switchers">
+      <div class="col s12 switchers">
         <div class="view-modes">
           <p>Card view mode</p>
           <div class="switch">
@@ -67,18 +67,18 @@
         <div class="reading-list" v-if="viewMode === 'card-view'">
           <component :is="viewMode" :books="filterWithText"></component>
         </div>
-    <div class="reading-list" v-else>
-      <component
-        :is="viewMode"
-        :items="filterWithText"
-        :columns="columns"
-        :actions="actions"
-        :config="config"
-        @onEdit="handleEdit"
-        @onView="handleView"
-        @onDelete="handleDelete"
-      ></component>
-    </div>
+        <div class="reading-list" v-else>
+          <component
+            :is="viewMode"
+            :items="filterWithText"
+            :columns="columns"
+            :actions="actions"
+            :config="config"
+            @onEdit="handleEdit"
+            @onView="handleView"
+            @onDelete="handleDelete"
+          ></component>
+        </div>
       </div>
     </div>
     <!-- Passing additional props in case with table-view -->
@@ -153,8 +153,8 @@
       changeUseFilter() {
         this.useFilter = !this.useFilter;
         // if we're not using filters -- reset filter input model.
-        if (this.useFilter !== 'true') {
-          this.findText = ''
+        if (this.useFilter !== "true") {
+          this.findText = "";
         }
         localStorage.setItem("useFilter", this.useFilter);
         setTimeout(() => {
