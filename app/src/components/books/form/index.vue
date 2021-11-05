@@ -61,7 +61,7 @@
       setModel() {
         this.model = { ...defaultForm };
       },
-      // todo: think about to move this func to the mixin.
+      // todo: move this func to the mixin.
       setFields({ fieldKey, values = [] }) {
         const foundField = this.schema.fields.find(
           (field) => field.model === fieldKey

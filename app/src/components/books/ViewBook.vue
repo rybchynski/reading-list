@@ -1,23 +1,185 @@
 <template>
-  <div>
-    <h2>Single book</h2>
-    <p>Id is {{ this.$route.params.id }}</p>
-    <pre>{{ book }}</pre>
+  <div class="book-view">
+    <h2 class="center book-title">{{ book.title }}</h2>
+    <div class="row">
+      <div class="col m6 s12">
+        <img :src="book.cover" :alt="book.title" />
+      </div>
+      <div class="col m6 s12 meta-info">
+        <div class="book-author" v-if="book.author">
+          <span class="label">Author:</span>
+          <span class="value">{{ book.author.name }}</span>
+        </div>
+
+        <div class="book-type">
+          <span class="label">Type:</span>
+          <span class="value">{{ book.type }}</span>
+        </div>
+
+        <div class="book-rating">
+          <span class="label">Rating:</span>
+          <star-rating
+            :read-only="true"
+            :show-rating="false"
+            :rating="book.rating"
+            :star-size="20"
+          />
+        </div>
+
+        <div class="book-status">
+          <span class="label">Status:</span>
+          <span class="value">{{ book.status }}</span>
+        </div>
+
+        <div class="book-pages">
+          <span class="label">Total pages:</span>
+          <span class="value">{{ book.pages }} p.</span>
+        </div>
+
+        <div class="book-notation">
+          <span class="label">Has notation:</span>
+          <span class="value">{{ book.notation ? "Yes" : "No" }}</span>
+        </div>
+
+        <div class="book-categories">
+          <span class="label">Categories:</span>
+          <span
+            class="value"
+            v-for="(category, id) in book.categories"
+            :key="id"
+            >{{ category.name }}</span
+          >
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12 additional-info">
+        <ul class="collapsible" ref="collapsible">
+          <li v-if="book.author.bio">
+            <div class="collapsible-header">
+              <i class="material-icons">person</i>Author's short biography
+            </div>
+            <div class="collapsible-body">
+              <span>{{ book.author.bio }}</span>
+            </div>
+          </li>
+          <li>
+            <div class="collapsible-header">
+              <i class="material-icons">book</i>Book intro
+            </div>
+            <div class="collapsible-body">
+              <span
+                >This is the step-by-step guide on how to set up and understand
+                the principle behind the note-taking system that enabled Luhmann
+                to become one of the most productive and systematic scholars of
+                all time. But most importantly, it enabled him to do it with
+                ease. He famously said: “I never force myself to do anything I
+                don’t feel like.” Luhmann’s system is often misunderstood and
+                rarely well explained (especially in English). This book aims to
+                make this powerful tool accessible to everyone with an interest
+                in reading, thinking and writing. It is especially helpful for
+                students and academics of the social sciences and humanities and
+                nonfiction writers..</span
+              >
+            </div>
+          </li>
+          <li v-if="book.note">
+            <div class="collapsible-header">
+              <i class="material-icons">event_note</i>My note
+            </div>
+            <div class="collapsible-body">
+              <span>{{ book.note }}</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <FloatingButton @onClick="handleCancel" icon="arrow_back" />
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+  import { mapGetters, mapActions } from "vuex";
+  import FloatingButton from "@/components/ui/FloatingButton.vue";
+  import StarRating from "vue-star-rating";
+  import M from "materialize-css";
 
-export default {
-  computed: { ...mapGetters(["book"]) },
-  methods: {
-    ...mapActions({ fetchBook: "fetchBook" }),
-  },
-  mounted() {
-    this.fetchBook(this.$route.params.id);
-  },
-};
+  export default {
+    components: { StarRating, FloatingButton },
+    computed: { ...mapGetters(["book"]) },
+    methods: {
+      ...mapActions({ fetchBook: "fetchBook" }),
+      mInit() {
+        const el = this.$refs.collapsible || null;
+        if (el) {
+          M.Collapsible.init(el);
+        }
+      },
+      handleCancel() {
+        this.$router.back();
+      },
+    },
+
+    async mounted() {
+      await this.fetchBook(this.$route.params.id);
+      this.mInit();
+    },
+  };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+  .book-view {
+    .book-title {
+      margin: 40px auto;
+    }
+
+    img {
+      max-width: 100%;
+      min-width: 100%;
+      object-fit: cover;
+    }
+
+    .meta-info {
+      font-size: 16px;
+
+      div[class^="book-"] {
+        margin-top: 30px;
+      }
+
+      .label {
+        color: gray;
+      }
+
+      .value {
+        margin-left: 20px;
+        font-weight: 600;
+      }
+
+      .book-categories {
+        .label {
+          margin-right: 20px;
+        }
+        .value {
+          border: solid 1px gray;
+          border-radius: 15px;
+          background-color: orangered;
+          color: white;
+          padding: 5px 10px;
+          text-transform: uppercase;
+          font-size: 12px;
+          margin-right: 5px;
+          margin-left: 0;
+        }
+      }
+    }
+
+    .book-rating {
+      display: flex;
+    }
+
+    .vue-star-rating {
+      display: inline-block;
+      margin-left: 20px;
+    }
+  }
+</style>
