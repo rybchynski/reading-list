@@ -50,6 +50,15 @@
             >{{ category.name }}</span
           >
         </div>
+        <div class="book-actions">
+          <Button @click="handleEdit" buttonText="Edit" buttonSize="medium" />
+          <Button
+            @click="handleDelete"
+            buttonText="Delete"
+            buttonSize="medium"
+            buttonType="danger"
+          />
+        </div>
       </div>
     </div>
     <div class="row">
@@ -63,24 +72,12 @@
               <span>{{ book.author.bio }}</span>
             </div>
           </li>
-          <li>
+          <li v-if="book.bookIntro">
             <div class="collapsible-header">
               <i class="material-icons">book</i>Book intro
             </div>
             <div class="collapsible-body">
-              <span
-                >This is the step-by-step guide on how to set up and understand
-                the principle behind the note-taking system that enabled Luhmann
-                to become one of the most productive and systematic scholars of
-                all time. But most importantly, it enabled him to do it with
-                ease. He famously said: “I never force myself to do anything I
-                don’t feel like.” Luhmann’s system is often misunderstood and
-                rarely well explained (especially in English). This book aims to
-                make this powerful tool accessible to everyone with an interest
-                in reading, thinking and writing. It is especially helpful for
-                students and academics of the social sciences and humanities and
-                nonfiction writers..</span
-              >
+              <span>{{ book.bookIntro }}</span>
             </div>
           </li>
           <li v-if="book.note">
@@ -101,14 +98,15 @@
 <script>
   import { mapGetters, mapActions } from "vuex";
   import FloatingButton from "@/components/ui/FloatingButton.vue";
+  import Button from "@/components/Button.vue";
   import StarRating from "vue-star-rating";
   import M from "materialize-css";
 
   export default {
-    components: { StarRating, FloatingButton },
+    components: { StarRating, FloatingButton, Button },
     computed: { ...mapGetters(["book"]) },
     methods: {
-      ...mapActions({ fetchBook: "fetchBook" }),
+      ...mapActions({ fetchBook: "fetchBook", deleteBook: "deleteBook" }),
       mInit() {
         const el = this.$refs.collapsible || null;
         if (el) {
@@ -117,6 +115,23 @@
       },
       handleCancel() {
         this.$router.back();
+      },
+      handleEdit() {
+        this.$router.push(`/books/${this.book._id}/edit`);
+      },
+      handleDelete() {
+        this.$confirm({
+          title: "Warning",
+          message: `Are you sure you want to delete <span class="confirm-item-name">"${this.book.title}"</span> book?`,
+          confirm: "Sure",
+          cancel: "No way",
+        }).then((res) => {
+          if (res) {
+            this.deleteBook(this.book._id);
+            this.$router.push("/");
+            this.$info(`Book "${this.book.title}" was deleted.`);
+          }
+        });
       },
     },
 
@@ -180,6 +195,11 @@
     .vue-star-rating {
       display: inline-block;
       margin-left: 20px;
+    }
+
+    .book-actions {
+      display: flex;
+      gap: 10px;
     }
   }
 </style>

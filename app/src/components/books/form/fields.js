@@ -93,11 +93,19 @@ export const schema = {
     {
       type: "textArea",
       model: "note",
-      inputType: "checkbox",
+      inputType: "text",
       label: "Note",
       hint: "Maximum 1200 symbols",
       max: 1200,
       rows: 10,
+    },
+    {
+      type: "textArea",
+      model: "bookIntro",
+      inputType: "text",
+      label: "Book Intro",
+      rows: 110,
+      hint: "Book intro, first chapter, text example...",
     },
     {
       type: "vueMultiSelect",
