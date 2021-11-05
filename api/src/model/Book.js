@@ -56,6 +56,10 @@ const schema = new Schema({
     type: Number,
     default: 1,
   },
+  bookIntro: {
+    type: String,
+    default: '',
+  },
   currentPage: {
     type: Number,
     default: 1,
