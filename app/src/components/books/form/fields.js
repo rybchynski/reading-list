@@ -194,6 +194,7 @@ export const defaultForm = {
   pages: 1,
   currentPage: 1,
   note: "",
+  bookIntro: "",
   author: [],
   categories: [],
   status: "",
