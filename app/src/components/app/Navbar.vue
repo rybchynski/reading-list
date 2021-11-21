@@ -4,13 +4,24 @@
       <div class="container">
         <div class="nav-wrapper">
           <div class="brand-logo right account-info hide-on-med-and-down">
-            <router-link to="/profile">
+            <router-link to="/profile" v-if="loggedIn">
               <AccountBadge
                 :image="userImage"
                 userName="John"
                 userEmail="johndoe@example.com"
               />
             </router-link>
+            <ul v-else>
+              <router-link
+                to="/login"
+                custom
+                v-slot="{ href, navigate, isActive }"
+              >
+                <li @click="navigate" :class="isActive ? 'active' : null">
+                  <a :href="href"> Login </a>
+                </li>
+              </router-link>
+            </ul>
           </div>
           <a href="#" data-target="mobile-app" class="sidenav-trigger"
             ><i class="material-icons">menu</i></a
@@ -123,6 +134,7 @@
     data() {
       return {
         userImage: require("../../assets/images/empty-logo.png"),
+        loggedIn: false,
       };
     },
     mounted() {

@@ -15,7 +15,9 @@ const routes = [
     name: "AddBook",
     meta: { layout: "main" },
     component: () =>
-      import(/* webpackChunkName: "home" */ "@/components/books/form/index.vue"),
+      import(
+        /* webpackChunkName: "home" */ "@/components/books/form/index.vue"
+      ),
   },
   {
     path: "/books/:id",
@@ -29,8 +31,11 @@ const routes = [
     name: "EditBook",
     meta: { layout: "main" },
     component: () =>
-      import(/* webpackChunkName: "home" */ "@/components/books/form/index.vue"),
+      import(
+        /* webpackChunkName: "home" */ "@/components/books/form/index.vue"
+      ),
   },
+  // User routes.
   {
     path: "/profile",
     name: "Profile",
@@ -38,6 +43,14 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "home" */ "../views/user/Profile.vue"),
   },
+  {
+    path: "/login",
+    name: "Login",
+    meta: { layout: "pure" },
+    component: () =>
+      import(/* webpackChunkName: "home" */ "../views/user/Login.vue"),
+  },
+  /////////////////////////////////////////////////////////////////////////////
 
   {
     path: "/categories",
@@ -70,13 +83,19 @@ const routes = [
     path: "/authors",
     name: "Authors",
     meta: { layout: "main" },
-    component: () => import(/* webpackChunkName: "authors" */ "@/components/authors/Authors.vue")
+    component: () =>
+      import(
+        /* webpackChunkName: "authors" */ "@/components/authors/Authors.vue"
+      ),
   },
   {
     path: "/authors/add",
     name: "AddAuthor",
     meta: { layout: "main" },
-    component: () => import(/* webpackChunkName: "authors" */ "@/components/authors/form/index.vue")
+    component: () =>
+      import(
+        /* webpackChunkName: "authors" */ "@/components/authors/form/index.vue"
+      ),
   },
   {
     path: "/authors/:id/edit",
