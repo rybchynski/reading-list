@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="books">
-      <div class="book-card-view" v-for="(book, id) in books" :key="id">
-        <BookCard :book="book" />
-      </div>
-    </div>
+      <transition-group name="book-list" class="books">
+        <div class="book-card-view" v-for="(book, id) in books" :key="id">
+          <BookCard :book="book" />
+        </div>
+      </transition-group>
   </div>
 </template>
 
@@ -39,5 +39,22 @@
     .books {
       grid-template-columns: 1fr;
     }
+  }
+
+  .book-list-item {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  .book-list-enter-active,
+  .book-list-leave-active {
+    transition: all .2s ease;
+  }
+  .book-list-enter-from,
+  .book-list-leave-to {
+    opacity: 0;
+    transform: translateX(130px);
+  }
+  .book-list-move {
+    transition: transform 0.4s ease;
   }
 </style>
