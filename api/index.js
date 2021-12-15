@@ -3,7 +3,9 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const http = require('http');
+const cookieParser = require('cookie-parser');
 const { routes } = require('./src/routes');
+const errorMiddleware = require('./src/middlewares/error.middleware');
 
 const {
   MDB,
@@ -31,11 +33,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // declare routes.
 routes.forEach((item) => {
   app.use(`/v1/${item}`, require(`./src/routes/${item}`));
 });
+app.use(errorMiddleware);
 
 http.createServer({}, app).listen(APP_PORT);
 console.log(`Server is running at ${APP_PORT}`);

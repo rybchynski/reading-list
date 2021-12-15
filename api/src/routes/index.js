@@ -1,3 +1,3 @@
 module.exports = {
-  routes: ['authors', 'categories', 'books'],
+  routes: ['authors', 'categories', 'books', 'users'],
 };

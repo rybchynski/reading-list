@@ -12,6 +12,7 @@
         "core-js": "^3.6.5",
         "materialize-css": "^1.0.0",
         "notivuecation": "^3.2.1",
+        "vee-validate": "^3.4.14",
         "vue": "^2.6.11",
         "vue-form-generator": "^2.3.4",
         "vue-multiselect": "^2.1.6",
