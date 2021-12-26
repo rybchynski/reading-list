@@ -156,6 +156,7 @@
       async onLogout() {
         await this.logout();
         this.$router.push("/login");
+        this.$info("You are logged out");
       },
     },
   };
