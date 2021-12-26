@@ -31,11 +31,10 @@ class UserService {
       password: hashPassword,
       activationLink,
     });
-    await mailService.sendActivationMail(
-      email,
-      `${process.env.API_URL}/api/v1/users/activate/${activationLink}`,
-    );
-
+    // await mailService.sendActivationMail(
+    //   email,
+    //   `${process.env.API_URL}/api/v1/users/activate/${activationLink}`,
+    // );
     const userData = this.#getUserData(user);
     const tokens = tokenService.generateTokens({ ...userData });
     await tokenService.saveToken(userData.id, tokens.refreshToken);
@@ -46,11 +45,16 @@ class UserService {
   async login(email, password) {
     const user = await User.findOne({ email });
     if (!user) {
-      throw ApiErrorsHandler.BadRequest('User with this email not fould.');
+      throw ApiErrorsHandler.BadRequest('Wrong email or password.');
     }
     const isPassCorrect = await bcrypt.compare(password, user.password);
     if (!isPassCorrect) {
       throw ApiErrorsHandler.BadRequest('Wrong email or password.');
+    }
+    if (!user.isActivated) {
+      throw ApiErrorsHandler.BadRequest(
+        'User with this email is not activated.',
+      );
     }
     const userData = this.#getUserData(user);
     const tokens = tokenService.generateTokens({ ...userData });
