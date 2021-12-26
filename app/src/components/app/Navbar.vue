@@ -4,13 +4,20 @@
       <div class="container">
         <div class="nav-wrapper">
           <div class="brand-logo right account-info hide-on-med-and-down">
-            <router-link to="/profile" v-if="loggedIn">
-              <AccountBadge
-                :image="userImage"
-                userName="John"
-                userEmail="johndoe@example.com"
-              />
-            </router-link>
+            <div class="profile-info" v-if="isAuth">
+              <router-link to="/profile">
+                <AccountBadge
+                  :image="userImage"
+                  :userName="user.username"
+                  :userEmail="user.email"
+                />
+              </router-link>
+              <ul>
+                <li @click="logout">
+                  <a href="/login">Logout</a>
+                </li>
+              </ul>
+            </div>
             <ul v-else>
               <router-link
                 to="/login"
@@ -113,6 +120,7 @@
         buttonText="Sign Out"
         buttonIcon="chevron_right"
         buttonClassNames="rounded"
+        @click="onLogout"
       />
     </div>
   </div>
@@ -122,7 +130,8 @@
   import "materialize-css/dist/css/materialize.css";
   import M from "materialize-css";
   import AccountBadge from "@/components/AccountBadge.vue";
-  import Button from "@/components/Button.vue";
+  import Button from "@/components/ui/Button.vue";
+  import { mapGetters, mapActions } from "vuex";
 
   export default {
     name: "navbar",
@@ -134,11 +143,21 @@
     data() {
       return {
         userImage: require("../../assets/images/empty-logo.png"),
-        loggedIn: false,
       };
+    },
+    computed: {
+      ...mapGetters(["user", "isAuth"]),
     },
     mounted() {
       M.AutoInit();
+    },
+    methods: {
+      ...mapActions({ logout: "logout" }),
+      async onLogout() {
+        await this.logout();
+        this.$router.push("/login");
+        this.$info("You are logged out");
+      },
     },
   };
 </script>
@@ -162,5 +181,9 @@
   #mobile-app i.material-icons {
     line-height: 43px;
     margin-right: 10px;
+  }
+
+  .profile-info {
+    display: flex;
   }
 </style>

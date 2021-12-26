@@ -10,6 +10,7 @@
 <script>
   import MainLayout from "@/layouts/MainLayout";
   import PureLayout from "@/layouts/PureLayout";
+  import { mapActions } from "vuex";
 
   export default {
     computed: {
@@ -21,6 +22,16 @@
     components: {
       MainLayout,
       PureLayout,
+    },
+
+    methods: {
+      ...mapActions({ checkAuth: "checkAuth" }),
+    },
+
+    mounted() {
+      if (localStorage.getItem("token")) {
+        this.checkAuth();
+      }
     },
   };
 </script>

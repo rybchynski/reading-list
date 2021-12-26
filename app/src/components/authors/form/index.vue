@@ -80,20 +80,19 @@
             data: updatedAuthor,
           });
           this.$router.back();
-          this.$info(`Author "${this.model.name}" was successfully updated.`)
+          this.$info(`Author "${this.model.name}" was successfully updated.`);
         } catch (err) {
           this.error = err;
-          this.$error('Something went wrong.')
+          this.$error("Something went wrong.");
         }
       },
       async onAuthorCreate() {
-        console.log(this.model.name)
         try {
           await this.createAuthor({ data: this.model });
           this.$router.back();
-          this.$info(`Author "${this.model.name}" was successfully created.`)
+          this.$info(`Author "${this.model.name}" was successfully created.`);
         } catch (err) {
-          this.$error('Something went wrong.')
+          this.$error("Something went wrong.");
           this.error = err;
         }
       },
@@ -102,11 +101,10 @@
     async mounted() {
       if (this.updateAction) {
         await this.fetchAuthor(this.$route.params.id);
-        this.model = { ...this.author};
+        this.model = { ...this.author };
         return;
       }
       this.setModel();
     },
   };
 </script>
-

@@ -68,7 +68,7 @@
 <script>
   import TableHeader from "./components/TableHeader.vue";
   import TableCell from "./components/TableCell.vue";
-  import Button from "@/components/Button.vue";
+  import Button from "@/components/ui/Button.vue";
 
   export default {
     components: {

@@ -98,7 +98,7 @@
 <script>
   import { mapGetters, mapActions } from "vuex";
   import FloatingButton from "@/components/ui/FloatingButton.vue";
-  import Button from "@/components/Button.vue";
+  import Button from "@/components/ui/Button.vue";
   import StarRating from "vue-star-rating";
   import M from "materialize-css";
 
