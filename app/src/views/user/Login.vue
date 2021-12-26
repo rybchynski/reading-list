@@ -82,78 +82,98 @@
 </template>
 
 <script>
-import {
-  ValidationObserver,
-  ValidationProvider,
-} from "vee-validate/dist/vee-validate.full";
+  import { mapActions, mapGetters } from "vuex";
+  import {
+    ValidationObserver,
+    ValidationProvider,
+  } from "vee-validate/dist/vee-validate.full";
 
-export default {
-  components: {
-    FormValidator: ValidationObserver,
-    FieldValidator: ValidationProvider,
-  },
-
-  data() {
-    return {
-      loginForm: {
-        email: "",
-        password: "",
-      },
-      loginFormError: null,
-    };
-  },
-
-  methods: {
-    async onLogin() {
-      const isCorrect = await this.$refs.authForm.validate();
-      console.log(isCorrect);
-      if (isCorrect) {
-        try {
-          console.log(this.authForm);
-        } catch (err) {
-          // console.log(err);
-          this.authFormError = err.response.data.message;
-        }
-      }
-      console.log(this.authFormError);
+  export default {
+    components: {
+      FormValidator: ValidationObserver,
+      FieldValidator: ValidationProvider,
     },
-  },
-};
+
+    data() {
+      return {
+        loginForm: {
+          email: "",
+          password: "",
+        },
+        loginFormError: null,
+      };
+    },
+    computed: {
+      ...mapGetters(["isAuth", "user"]),
+    },
+
+    methods: {
+      ...mapActions({ login: "login" }),
+      async onLogin() {
+        const isCorrect = await this.$refs.loginForm.validate();
+        if (isCorrect) {
+          try {
+            await this.login(this.loginForm);
+            this.$router.push("/");
+            this.$info(`Welcome ${this.user.email} on the board!`);
+          } catch (err) {
+            this.loginFormError = err?.response?.data?.message;
+          }
+        }
+      },
+      redirectIfAuth() {
+        if (this.isAuth) {
+          this.$router.push("/");
+          this.$info("You are logged in.");
+        }
+      },
+    },
+    mounted() {
+      this.redirectIfAuth();
+    },
+  };
 </script>
 
 <style lang="scss" scoped>
-.login-page {
-  width: 100%;
-  height: 100vh;
-  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
-    url("../../assets/images/login-bg1.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  .login-page {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
+      url("../../assets/images/login-bg1.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  form {
-    input {
-      color: $white;
+    form {
+      input {
+        color: $white;
+      }
+
+      span.invalid-feedback {
+        color: red;
+        font-size: 13px;
+      }
     }
 
-    span.invalid-feedback {
+    .auth-form__errors {
       color: red;
-      font-size: 13px;
+      border: solid 1px red;
+      padding: 10px;
+      margin-bottom: 35px;
     }
-  }
 
-  .actions {
-    &__registration {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-around;
-      color: aliceblue;
-      font-size: 12px;
+    .actions {
+      &__registration {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        color: aliceblue;
+        font-size: 12px;
+      }
     }
   }
-}
 </style>

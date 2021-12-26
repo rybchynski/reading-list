@@ -125,83 +125,107 @@
 </template>
 
 <script>
-import {
-  ValidationObserver,
-  ValidationProvider,
-} from "vee-validate/dist/vee-validate.full";
+  import { mapActions, mapGetters } from "vuex";
+  import {
+    ValidationObserver,
+    ValidationProvider,
+  } from "vee-validate/dist/vee-validate.full";
 
-export default {
-  components: {
-    FormValidator: ValidationObserver,
-    FieldValidator: ValidationProvider,
-  },
-
-  data() {
-    return {
-      authForm: {
-        username: "",
-        email: "",
-        password: "",
-        logo: null,
-      },
-      authFormError: null,
-    };
-  },
-
-  methods: {
-    async onAuth() {
-      const isCorrect = await this.$refs.authForm.validate();
-      console.log(isCorrect);
-      if (isCorrect) {
-        try {
-          console.log(this.authForm);
-        } catch (err) {
-          console.log(err);
-          this.authFormError = err.response.data.message;
-        }
-      }
-      console.log(this.authFormError);
+  export default {
+    components: {
+      FormValidator: ValidationObserver,
+      FieldValidator: ValidationProvider,
     },
-  },
-};
+
+    data() {
+      return {
+        authForm: {
+          username: "",
+          email: "",
+          password: "",
+          logo: null,
+        },
+        authFormError: null,
+      };
+    },
+    computed: {
+      ...mapGetters(["isAuth"]),
+    },
+
+    methods: {
+      ...mapActions({ registration: "registration" }),
+      async onAuth() {
+        const isCorrect = await this.$refs.authForm.validate();
+        if (isCorrect) {
+          try {
+            await this.registration(this.authForm);
+            this.$router.push("/login");
+            this.$info(
+              "Please check your email inbox to complete registration process."
+            );
+          } catch (err) {
+            this.authFormError = err.response.data.message;
+          }
+        }
+      },
+
+      redirectIfAuth() {
+        if (this.isAuth) {
+          this.$router.push("/");
+          this.$info("You are logged in.");
+        }
+      },
+    },
+
+    mounted() {
+      this.redirectIfAuth();
+    },
+  };
 </script>
 
 <style lang="scss" scoped>
-.login-page {
-  width: 100%;
-  height: 100vh;
-  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
-    url("../../assets/images/login-bg1.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  .login-page {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
+      url("../../assets/images/login-bg1.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  form {
-    input {
-      color: $white;
+    form {
+      input {
+        color: $white;
+      }
+
+      span.invalid-feedback {
+        color: red;
+        font-size: 13px;
+      }
     }
 
-    span.invalid-feedback {
+    .auth-form__errors {
       color: red;
-      font-size: 13px;
+      border: solid 1px red;
+      padding: 10px;
+      margin-bottom: 35px;
+    }
+
+    .actions {
+      margin-top: 40px;
+      margin-bottom: 40px;
+
+      &__registration {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        color: aliceblue;
+        font-size: 12px;
+      }
     }
   }
-
-  .actions {
-    margin-top: 40px;
-    margin-bottom: 40px;
-
-    &__registration {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-around;
-      color: aliceblue;
-      font-size: 12px;
-    }
-  }
-}
 </style>
