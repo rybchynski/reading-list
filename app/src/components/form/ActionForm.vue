@@ -15,7 +15,7 @@
 </template>
 
 <script>
-  import Button from "@/components/Button.vue";
+  import Button from "@/components/ui/Button.vue";
   import FloatingButton from "@/components/ui/FloatingButton.vue";
   import "vue-multiselect/dist/vue-multiselect.min.css";
 

@@ -9,21 +9,21 @@
 </template>
 
 <script>
-export default {
-  props: {
-    icon: {
-      type: String,
-      default: "",
+  export default {
+    props: {
+      icon: {
+        type: String,
+        default: "",
+      },
     },
-  },
-};
+  };
 </script>
 
 <style lang="scss" scoped>
-a {
-  background-color: $deep-sky-blue;
-  position: fixed;
-  bottom: 5%;
-  right: 5%;
-}
+  a {
+    background-color: $deep-sky-blue;
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+  }
 </style>
