@@ -168,17 +168,6 @@
           }
         }
       },
-
-      redirectIfAuth() {
-        if (this.isAuth) {
-          this.$router.push("/");
-          this.$info("You are logged in.");
-        }
-      },
-    },
-
-    mounted() {
-      this.redirectIfAuth();
     },
   };
 </script>

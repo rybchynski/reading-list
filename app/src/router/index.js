@@ -1,11 +1,11 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import store from "../store";
 
 Vue.use(VueRouter);
 
 function authGuard(to, from, next) {
-  if (store.getters.isAuth) {
+  let { isAuth } = JSON.parse(localStorage.getItem("vuex"));
+  if (isAuth) {
     next({ name: "Home" });
   } else {
     next();
@@ -81,8 +81,18 @@ const routes = [
     path: "/sign-up",
     name: "SignUp",
     meta: { layout: "pure" },
+    beforeEnter: authGuard,
     component: () =>
       import(/* webpackChunkName: "SignUp" */ "../views/user/SignUp.vue"),
+  },
+
+  {
+    path: "/users",
+    name: "Users",
+    meta: { layout: "main" },
+    // beforeEnter: isAdmin,
+    component: () =>
+      import(/* webpackChunkName: "SignUp" */ "../views/user/Users.vue"),
   },
   /////////////////////////////////////////////////////////////////////////////
 
