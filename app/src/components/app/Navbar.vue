@@ -66,6 +66,16 @@
                 <a :href="href">Authors</a>
               </li>
             </router-link>
+            <router-link
+              to="/users"
+              custom
+              v-slot="{ href, navigate, isActive }"
+              exact
+            >
+              <li @click="navigate" :class="isActive ? 'active' : null">
+                <a :href="href">Users</a>
+              </li>
+            </router-link>
           </ul>
         </div>
       </div>
@@ -111,6 +121,19 @@
             <a :href="href">
               <i class="material-icons">person</i>
               Authors
+            </a>
+          </li>
+        </router-link>
+        <router-link
+          to="/users"
+          custom
+          v-slot="{ href, navigate, isActive }"
+          exact
+        >
+          <li @click="navigate" :class="isActive ? 'active' : null">
+            <a :href="href">
+              <i class="material-icons">people</i>
+              Users
             </a>
           </li>
         </router-link>
