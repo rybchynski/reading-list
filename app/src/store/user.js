@@ -4,6 +4,7 @@ import {
   logout,
   refresh,
   getUsers,
+  updateUserStatus,
 } from "@/services/user.service";
 
 const state = () => ({
@@ -22,6 +23,9 @@ const mutations = {
   },
   setIsAuth(state, isAuth) {
     state.isAuth = isAuth;
+  },
+  updateUserStatusSuccess(state, user) {
+    state.user.isActivated = user.isActivated;
   },
   setUserError(state, error) {
     state.userError = error;
@@ -93,7 +97,7 @@ const actions = {
   async getUsers({ commit }) {
     try {
       const response = await getUsers();
-      commit("setUsers", response.users);
+      commit("setUsers", response);
     } catch (err) {
       commit("setUserError", {
         errorType: "get users error",
@@ -101,6 +105,19 @@ const actions = {
         err,
       });
       throw err;
+    }
+  },
+
+  async updateUserStatus({ commit }, { id, data }) {
+    try {
+      const user = await updateUserStatus(id, data);
+      commit("updateUserStatusSuccess", user);
+    } catch (err) {
+      commit("setUserError", {
+        errorType: "update user failed",
+        errorMessage: err?.response?.data?.message,
+        err,
+      });
     }
   },
 };
