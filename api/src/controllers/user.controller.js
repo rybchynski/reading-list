@@ -58,6 +58,22 @@ class UserController {
     }
   }
 
+  async updateStatus({ params: { id }, body }, res) {
+    try {
+      const user = await userService.update(id, body);
+      const userData = {
+        id: user._id,
+        email: user.email,
+        isActivated: user.isActivated,
+        roles: user.roles,
+      };
+
+      return res.json(userData);
+    } catch (e) {
+      next(e);
+    }
+  }
+
   async activate(req, res, next) {
     try {
       const link = req.params.link;

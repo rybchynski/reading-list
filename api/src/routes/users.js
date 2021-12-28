@@ -15,5 +15,6 @@ router.route('/login').post(user.login);
 router.route('/logout').get(user.logout);
 router.route('/').get(authMiddleware, user.getUsers);
 router.route('/refresh').get(user.refresh);
+router.route('/:id').put(user.updateStatus);
 
 module.exports = router;
