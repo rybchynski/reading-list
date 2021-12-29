@@ -12,6 +12,7 @@ class UserService {
       username: user.username,
       email: user.email,
       isActivated: user.isActivated,
+      roles: user.roles || [],
     };
   }
 
@@ -30,6 +31,7 @@ class UserService {
       email,
       password: hashPassword,
       activationLink,
+      roles: ['authenticated'],
     });
     // await mailService.sendActivationMail(
     //   email,
