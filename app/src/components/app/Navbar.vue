@@ -71,6 +71,7 @@
               custom
               v-slot="{ href, navigate, isActive }"
               exact
+              v-if="isAdmin"
             >
               <li @click="navigate" :class="isActive ? 'active' : null">
                 <a :href="href">Users</a>
@@ -129,6 +130,7 @@
           custom
           v-slot="{ href, navigate, isActive }"
           exact
+          v-if="isAdmin"
         >
           <li @click="navigate" :class="isActive ? 'active' : null">
             <a :href="href">
@@ -169,7 +171,7 @@
       };
     },
     computed: {
-      ...mapGetters(["user", "isAuth"]),
+      ...mapGetters(["user", "isAuth", "isAdmin"]),
     },
     mounted() {
       M.AutoInit();

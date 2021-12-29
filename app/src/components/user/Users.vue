@@ -39,6 +39,7 @@
                 @click="changeStatus(userItem._id, !userItem.isActivated)"
                 :buttonText="userItem.isActivated ? 'Block' : 'Unblock'"
                 buttonSize="small"
+                v-if="userItem._id !== user.id"
               />
             </table-cell>
           </slot>

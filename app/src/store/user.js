@@ -11,6 +11,7 @@ const state = () => ({
   user: {},
   users: [],
   isAuth: false,
+  isAdmin: false,
   userError: null,
 });
 
@@ -23,6 +24,9 @@ const mutations = {
   },
   setIsAuth(state, isAuth) {
     state.isAuth = isAuth;
+  },
+  setIsAdmin(state, isAdmin) {
+    state.isAdmin = isAdmin;
   },
   updateUserStatusSuccess(state, user) {
     state.user.isActivated = user.isActivated;
@@ -51,7 +55,12 @@ const actions = {
       const response = await login(email, password);
       localStorage.setItem("token", response.accessToken);
       commit("setUser", response.user);
-      commit("setIsAuth", true);
+      if (response.user.isActivated) {
+        commit("setIsAuth", true);
+      }
+      if (response.user.roles.includes("admin")) {
+        commit("setIsAdmin", true);
+      }
     } catch (err) {
       commit("setUserError", {
         errorType: "user login failed",
@@ -67,6 +76,7 @@ const actions = {
       await logout();
       localStorage.removeItem("token");
       commit("setIsAuth", false);
+      commit("setIsAdmin", false);
       commit("setUser", {});
     } catch (err) {
       commit("setUserError", {
@@ -82,7 +92,12 @@ const actions = {
     try {
       const response = await refresh();
       localStorage.setItem("token", response.accessToken);
-      commit("setIsAuth", true);
+      if (response.user.isActivated) {
+        commit("setIsAuth", true);
+      }
+      if (response.user.roles.includes("admin")) {
+        commit("setIsAdmin", true);
+      }
       commit("setUser", response.user);
     } catch (err) {
       commit("setUserError", {
@@ -126,6 +141,7 @@ const getters = {
   user: ({ user }) => user,
   users: ({ users }) => users,
   isAuth: ({ isAuth }) => isAuth,
+  isAdmin: ({ isAdmin }) => isAdmin,
   userError: ({ userError }) => userError,
 };
 
