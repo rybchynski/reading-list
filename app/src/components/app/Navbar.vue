@@ -66,6 +66,17 @@
                 <a :href="href">Authors</a>
               </li>
             </router-link>
+            <router-link
+              to="/users"
+              custom
+              v-slot="{ href, navigate, isActive }"
+              exact
+              v-if="isAdmin"
+            >
+              <li @click="navigate" :class="isActive ? 'active' : null">
+                <a :href="href">Users</a>
+              </li>
+            </router-link>
           </ul>
         </div>
       </div>
@@ -114,6 +125,20 @@
             </a>
           </li>
         </router-link>
+        <router-link
+          to="/users"
+          custom
+          v-slot="{ href, navigate, isActive }"
+          exact
+          v-if="isAdmin"
+        >
+          <li @click="navigate" :class="isActive ? 'active' : null">
+            <a :href="href">
+              <i class="material-icons">people</i>
+              Users
+            </a>
+          </li>
+        </router-link>
       </ul>
       <Button
         buttonType="primary"
@@ -146,7 +171,7 @@
       };
     },
     computed: {
-      ...mapGetters(["user", "isAuth"]),
+      ...mapGetters(["user", "isAuth", "isAdmin"]),
     },
     mounted() {
       M.AutoInit();

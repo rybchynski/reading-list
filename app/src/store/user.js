@@ -4,12 +4,14 @@ import {
   logout,
   refresh,
   getUsers,
+  updateUserStatus,
 } from "@/services/user.service";
 
 const state = () => ({
   user: {},
   users: [],
   isAuth: false,
+  isAdmin: false,
   userError: null,
 });
 
@@ -22,6 +24,12 @@ const mutations = {
   },
   setIsAuth(state, isAuth) {
     state.isAuth = isAuth;
+  },
+  setIsAdmin(state, isAdmin) {
+    state.isAdmin = isAdmin;
+  },
+  updateUserStatusSuccess(state, user) {
+    state.user.isActivated = user.isActivated;
   },
   setUserError(state, error) {
     state.userError = error;
@@ -47,7 +55,12 @@ const actions = {
       const response = await login(email, password);
       localStorage.setItem("token", response.accessToken);
       commit("setUser", response.user);
-      commit("setIsAuth", true);
+      if (response.user.isActivated) {
+        commit("setIsAuth", true);
+      }
+      if (response.user.roles.includes("admin")) {
+        commit("setIsAdmin", true);
+      }
     } catch (err) {
       commit("setUserError", {
         errorType: "user login failed",
@@ -63,6 +76,7 @@ const actions = {
       await logout();
       localStorage.removeItem("token");
       commit("setIsAuth", false);
+      commit("setIsAdmin", false);
       commit("setUser", {});
     } catch (err) {
       commit("setUserError", {
@@ -78,7 +92,12 @@ const actions = {
     try {
       const response = await refresh();
       localStorage.setItem("token", response.accessToken);
-      commit("setIsAuth", true);
+      if (response.user.isActivated) {
+        commit("setIsAuth", true);
+      }
+      if (response.user.roles.includes("admin")) {
+        commit("setIsAdmin", true);
+      }
       commit("setUser", response.user);
     } catch (err) {
       commit("setUserError", {
@@ -93,7 +112,7 @@ const actions = {
   async getUsers({ commit }) {
     try {
       const response = await getUsers();
-      commit("setUsers", response.users);
+      commit("setUsers", response);
     } catch (err) {
       commit("setUserError", {
         errorType: "get users error",
@@ -103,12 +122,26 @@ const actions = {
       throw err;
     }
   },
+
+  async updateUserStatus({ commit }, { id, data }) {
+    try {
+      const user = await updateUserStatus(id, data);
+      commit("updateUserStatusSuccess", user);
+    } catch (err) {
+      commit("setUserError", {
+        errorType: "update user failed",
+        errorMessage: err?.response?.data?.message,
+        err,
+      });
+    }
+  },
 };
 
 const getters = {
   user: ({ user }) => user,
   users: ({ users }) => users,
   isAuth: ({ isAuth }) => isAuth,
+  isAdmin: ({ isAdmin }) => isAdmin,
   userError: ({ userError }) => userError,
 };
 

@@ -9,5 +9,7 @@ const login = (data) =>
 const logout = () => request({ url: `users/logout`, method: "get" });
 const refresh = () => request({ url: `users/refresh`, method: "get" });
 const getUsers = () => request({ url: `users/`, method: "get" });
+const updateUserStatus = (id, data) =>
+  request({ url: `users/${id}`, method: "put", data: data });
 
-export { registration, login, logout, refresh, getUsers };
+export { registration, login, logout, refresh, getUsers, updateUserStatus };

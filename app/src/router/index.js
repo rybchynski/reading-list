@@ -67,7 +67,7 @@ const routes = [
       shouldBeAuth: true,
     },
     component: () =>
-      import(/* webpackChunkName: "Profile" */ "../views/user/Profile.vue"),
+      import(/* webpackChunkName: "Profile" */ "@/components/user/Profile.vue"),
   },
   {
     path: "/login",
@@ -75,7 +75,7 @@ const routes = [
     meta: { layout: "pure" },
     beforeEnter: authGuard,
     component: () =>
-      import(/* webpackChunkName: "Login" */ "../views/user/Login.vue"),
+      import(/* webpackChunkName: "Login" */ "@/components/user/Login.vue"),
   },
   {
     path: "/sign-up",
@@ -83,7 +83,7 @@ const routes = [
     meta: { layout: "pure" },
     beforeEnter: authGuard,
     component: () =>
-      import(/* webpackChunkName: "SignUp" */ "../views/user/SignUp.vue"),
+      import(/* webpackChunkName: "SignUp" */ "@/components/user/SignUp.vue"),
   },
 
   {
@@ -92,7 +92,7 @@ const routes = [
     meta: { layout: "main" },
     // beforeEnter: isAdmin,
     component: () =>
-      import(/* webpackChunkName: "SignUp" */ "../views/user/Users.vue"),
+      import(/* webpackChunkName: "SignUp" */ "@/components/user/Users.vue"),
   },
   /////////////////////////////////////////////////////////////////////////////
 

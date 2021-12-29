@@ -12,6 +12,7 @@ class UserService {
       username: user.username,
       email: user.email,
       isActivated: user.isActivated,
+      roles: user.roles || [],
     };
   }
 
@@ -30,6 +31,7 @@ class UserService {
       email,
       password: hashPassword,
       activationLink,
+      roles: ['authenticated'],
     });
     // await mailService.sendActivationMail(
     //   email,
@@ -99,6 +101,19 @@ class UserService {
     }
     user.isActivated = true;
     await user.save();
+  }
+
+  async update(id, body) {
+    try {
+      await User.findByIdAndUpdate(id, {
+        isActivated: body.isActivated,
+      });
+      const user = User.findById(id);
+
+      return user;
+    } catch (err) {
+      throw ApiErrorsHandler.BadRequest('Something went wrong.', err);
+    }
   }
 }
 
