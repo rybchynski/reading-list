@@ -1,5 +1,5 @@
 <template>
-  <div class="list-page-wrapper">
+  <div class="list-page-wrapper" v-if="books.length > 0">
     <h1 class="center-align page_title">{{ config.name }}</h1>
     <div class="row">
       <div class="col s12 switchers">
@@ -84,6 +84,10 @@
     <!-- Passing additional props in case with table-view -->
     <floating-button icon="add" @onClick="addBookHandler" />
   </div>
+  <div v-else>
+    <no-items names="Book" />
+    <floating-button icon="add" @onClick="addBookHandler" />
+  </div>
 </template>
 
 <script>
@@ -93,6 +97,7 @@
   import FloatingButton from "@/components/ui/FloatingButton.vue";
   import M from "materialize-css";
   import { actions, config, columns } from "@/components/books/setup.js";
+  import NoItems from "@/components/app/NoItems.vue";
 
   export default {
     name: "Home",
@@ -100,6 +105,7 @@
       TableView,
       CardView,
       FloatingButton,
+      NoItems,
     },
     data() {
       return {

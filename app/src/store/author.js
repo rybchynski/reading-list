@@ -1,4 +1,10 @@
-import { getAuthor, getAuthors, createAuthor, updateAuthor, deleteAuthor } from "@/services/author.service";
+import {
+  getAuthor,
+  getAuthors,
+  createAuthor,
+  updateAuthor,
+  deleteAuthor,
+} from "@/services/author.service";
 
 const state = () => ({
   author: {},
@@ -17,14 +23,14 @@ const mutations = {
     state.authorError = error;
   },
   createAuthorSuccess(state, author) {
-    state.author = author
+    state.author = author;
   },
   updateAuthorSuccess(state, author) {
-    state.author = author
+    state.author = author;
   },
   deleteAuthorSuccess(state, author) {
-    state.author = author
-  }
+    state.author = author;
+  },
 };
 
 const actions = {
@@ -34,8 +40,8 @@ const actions = {
       commit("setAuthor", author);
     } catch (err) {
       commit("setAuthorError", {
-        errType: 'fetch author error',
-        err
+        errType: "fetch author error",
+        err,
       });
     }
   },
@@ -43,42 +49,46 @@ const actions = {
   async fetchAuthors({ commit }) {
     try {
       const authors = await getAuthors();
+      console.log("fetch authors");
+      console.log(authors);
       commit("setAuthors", authors);
     } catch (err) {
       commit("setAuthorError", {
-        errType: 'fetch authors error',
-        err
+        errType: "fetch authors error",
+        err,
       });
     }
   },
   async createAuthor({ commit }, { data }) {
     try {
-      const author = await createAuthor(data)
-      commit("createAuthorSuccess", author)
+      const author = await createAuthor(data);
+      commit("createAuthorSuccess", author);
     } catch (err) {
-      commit('setAuthorError', {
-        errType: 'create author error',
-        err
-      })
+      commit("setAuthorError", {
+        errType: "create author error",
+        err,
+      });
     }
   },
 
   async updateAuthor({ commit }, { id, data }) {
     try {
-      const author = await updateAuthor(id, data)
-      commit("updateAuthorSuccess", author)
+      const author = await updateAuthor(id, data);
+      commit("updateAuthorSuccess", author);
     } catch (err) {
       commit("setAuthorError", {
-        errType: 'update author error',
-        err
-      })
+        errType: "update author error",
+        err,
+      });
     }
   },
 
   async deleteAuthor({ commit }, id) {
     try {
       const author = await deleteAuthor(id);
+      const authors = await this.fetchAuthors();
       commit("deleteAuthorSuccess", author);
+      commit("setAuthors", authors);
     } catch (err) {
       commit("setAuthorError", {
         errorType: "author delete failed",
