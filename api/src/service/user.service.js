@@ -13,6 +13,7 @@ class UserService {
       email: user.email,
       isActivated: user.isActivated,
       roles: user.roles || [],
+      createdAt: user.created_at,
     };
   }
 
@@ -58,6 +59,7 @@ class UserService {
         'User with this email is not activated.',
       );
     }
+
     const userData = this.#getUserData(user);
     const tokens = tokenService.generateTokens({ ...userData });
     await tokenService.saveToken(userData.id, tokens.refreshToken);
