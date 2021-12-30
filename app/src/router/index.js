@@ -63,7 +63,7 @@ const routes = [
     path: "/profile",
     name: "Profile",
     meta: {
-      layout: "pure",
+      layout: "main",
       shouldBeAuth: true,
     },
     component: () =>
