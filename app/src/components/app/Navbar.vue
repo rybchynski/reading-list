@@ -86,8 +86,8 @@
         <router-link to="/profile">
           <AccountBadge
             :image="userImage"
-            userName="John"
-            userEmail="johndoe@example.com"
+            :userName="user.username"
+            :userEmail="user.email"
           />
         </router-link>
       </div>
