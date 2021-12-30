@@ -85,8 +85,9 @@ const actions = {
   async deleteCategory({ commit }, id) {
     try {
       const category = await deleteCategory(id);
+      const categories = await getCategories();
       commit("deleteCategorySuccess", category);
-      // TODO: add popup message here.
+      commit("setCategories", categories);
     } catch (err) {
       commit("setCategoryError", {
         errorType: "category delete failed",

@@ -85,6 +85,8 @@ const actions = {
   async deleteBook({ commit }, id) {
     try {
       const book = await deleteBook(id);
+      const books = await this.fetchBooks();
+      commit("setBooks", books);
       commit("deleteBookSuccess", book);
     } catch (err) {
       commit("setBookError", {
