@@ -179,7 +179,17 @@
       },
 
       onLogoSelect() {
+        const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
         this.authForm.logo = this.$refs.fileLogo.files[0];
+        if (!allowedTypes.includes(this.authForm.logo.type)) {
+          this.authFormError =
+            "Only images with jpeg/jpg/png extension are allowed";
+        }
+        if (this.authForm.logo.size > 500000) {
+          this.authFormError = `Allow file with max size 500KB (current file size -- ${
+            this.authForm.logo.size / 1000
+          } KB )`;
+        }
       },
     },
   };
