@@ -28,14 +28,25 @@ class UserService {
     const hashPassword = await bcrypt.hash(password, 3);
     const activationLink = uuid.v4();
 
+    const roles = ['authenticated'];
+    let isActivated = false;
+    const users = await User.find();
+
+    if (users.length === 0) {
+      roles.push('admin');
+      isActivated = true;
+    }
+
     const user = await User.create({
       username,
       email,
       password: hashPassword,
       activationLink,
-      roles: ['authenticated'],
+      isActivated,
+      roles,
       logo: filename ?? null,
     });
+
     // await mailService.sendActivationMail(
     //   email,
     //   `${process.env.API_URL}/api/v1/users/activate/${activationLink}`,
