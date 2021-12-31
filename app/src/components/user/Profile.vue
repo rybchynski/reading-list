@@ -44,7 +44,10 @@
         );
       },
       logo() {
-        return process.env.VUE_APP_API_BASE_URL + this.user.logo;
+        if (this.user.logo) {
+          return process.env.VUE_APP_API_BASE_URL + this.user.logo;
+        }
+        return require("../../assets/images/empty-logo.png");
       },
     },
   };

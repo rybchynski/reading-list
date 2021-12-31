@@ -28,7 +28,10 @@
     },
     computed: {
       logo() {
-        return process.env.VUE_APP_API_BASE_URL + this.image;
+        if (this.image !== "") {
+          return process.env.VUE_APP_API_BASE_URL + this.image;
+        }
+        return require("../assets/images/empty-logo.png");
       },
     },
   };
