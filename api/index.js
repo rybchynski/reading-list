@@ -45,6 +45,7 @@ routes.forEach((item) => {
   app.use(`/v1/${item}`, require(`./src/routes/${item}`));
 });
 app.use(errorMiddleware);
+app.use(express.static('./uploads'));
 
 http.createServer({}, app).listen(APP_PORT);
 console.log(`Server is running at ${APP_PORT}`);

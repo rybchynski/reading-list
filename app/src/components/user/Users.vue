@@ -26,7 +26,7 @@
             <table-cell>{{ userItem.isActivated ? "yes" : "no" }}</table-cell>
             <table-cell>
               <span
-                v-for="role in userItem.roles"
+                v-for="role in userItem.roles.sort()"
                 :key="role"
                 class="user-role"
                 >{{ role }}</span

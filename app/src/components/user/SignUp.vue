@@ -3,7 +3,11 @@
     <div class="container">
       <div class="row">
         <FormValidator ref="authForm">
-          <form @submit.prevent="onAuth" class="col s12 m6 offset-m3">
+          <form
+            @submit.prevent="onAuth"
+            class="col s12 m6 offset-m3"
+            enctype="multipart/form-data"
+          >
             <div class="auth-form__errors" v-if="authFormError">
               {{ authFormError }}
             </div>
@@ -95,7 +99,7 @@
             <div class="file-field input-field">
               <div class="btn">
                 <span>Logo</span>
-                <input type="file" />
+                <input type="file" ref="fileLogo" @change="onLogoSelect" />
               </div>
               <div class="file-path-wrapper">
                 <input
@@ -158,7 +162,12 @@
         const isCorrect = await this.$refs.authForm.validate();
         if (isCorrect) {
           try {
-            await this.registration(this.authForm);
+            const formData = new FormData();
+            formData.append("logo", this.authForm.logo);
+            formData.append("username", this.authForm.username);
+            formData.append("email", this.authForm.email);
+            formData.append("password", this.authForm.password);
+            await this.registration(formData);
             this.$router.push("/login");
             this.$info(
               "Please check your email inbox to complete registration process."
@@ -166,6 +175,20 @@
           } catch (err) {
             this.authFormError = err.response.data.message;
           }
+        }
+      },
+
+      onLogoSelect() {
+        const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
+        this.authForm.logo = this.$refs.fileLogo.files[0];
+        if (!allowedTypes.includes(this.authForm.logo.type)) {
+          this.authFormError =
+            "Only images with jpeg/jpg/png extension are allowed";
+        }
+        if (this.authForm.logo.size > 500000) {
+          this.authFormError = `Allow file with max size 500KB (current file size -- ${
+            this.authForm.logo.size / 1000
+          } KB )`;
         }
       },
     },
