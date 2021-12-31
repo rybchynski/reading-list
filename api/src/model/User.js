@@ -22,6 +22,9 @@ const schema = new Schema(
       default: false,
     },
     activationLink: { type: String },
+    logo: {
+      type: String,
+    },
   },
   { timestamps: { createdAt: 'created_at' } },
 );

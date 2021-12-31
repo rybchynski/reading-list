@@ -14,10 +14,11 @@ class UserService {
       isActivated: user.isActivated,
       roles: user.roles || [],
       createdAt: user.created_at,
+      logo: user.logo,
     };
   }
 
-  async registration(username, email, password) {
+  async registration(username, email, password, filename) {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       throw ApiErrorsHandler.BadRequest(
@@ -33,6 +34,7 @@ class UserService {
       password: hashPassword,
       activationLink,
       roles: ['authenticated'],
+      logo: filename ?? null,
     });
     // await mailService.sendActivationMail(
     //   email,
