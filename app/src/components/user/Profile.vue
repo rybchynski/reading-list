@@ -5,7 +5,7 @@
       <div class="col s12">
         <div class="user-info row">
           <div class="user-info__image col s12 m6">
-            <img class="responsive-img" :src="userImage" alt="logo" />
+            <img class="responsive-img" :src="logo" alt="logo" />
           </div>
           <div class="user-info__data col s12 m6">
             <div class="user-info__data-name">
@@ -43,11 +43,9 @@
           date.getMinutes()
         );
       },
-    },
-    data() {
-      return {
-        userImage: require("../../assets/images/empty-logo.png"),
-      };
+      logo() {
+        return process.env.VUE_APP_API_BASE_URL + this.user.logo;
+      },
     },
   };
 </script>
