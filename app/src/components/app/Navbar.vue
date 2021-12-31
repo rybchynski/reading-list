@@ -7,7 +7,7 @@
             <div class="profile-info" v-if="isAuth">
               <router-link to="/profile">
                 <AccountBadge
-                  :image="userImage"
+                  :image="user.logo"
                   :userName="user.username"
                   :userEmail="user.email"
                 />
@@ -85,7 +85,7 @@
       <div class="account-link">
         <router-link to="/profile">
           <AccountBadge
-            :image="userImage"
+            :image="user.logo"
             userName="John"
             userEmail="johndoe@example.com"
           />
@@ -163,12 +163,6 @@
     components: {
       AccountBadge,
       Button,
-    },
-    // TODO: replace fake data with api.
-    data() {
-      return {
-        userImage: require("../../assets/images/empty-logo.png"),
-      };
     },
     computed: {
       ...mapGetters(["user", "isAuth", "isAdmin"]),
