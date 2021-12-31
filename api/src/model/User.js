@@ -21,6 +21,9 @@ const schema = new Schema({
     default: false,
   },
   activationLink: { type: String },
+  logo: {
+    type: String,
+  },
 });
 
 module.exports = model('User', schema);

@@ -13,7 +13,12 @@ class UserController {
       }
 
       const { username, email, password } = req.body;
-      await userService.registration(username, email, password);
+      await userService.registration(
+        username,
+        email,
+        password,
+        req?.file?.filename || null,
+      );
 
       return res.json({ username, email });
     } catch (e) {
