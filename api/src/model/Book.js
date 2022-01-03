@@ -74,6 +74,10 @@ const schema = new Schema({
     type: ObjectId,
     ref: 'Author',
   },
+  owner: {
+    type: ObjectId,
+    ref: 'User',
+  },
 });
 
 module.exports = model('Book', schema);
