@@ -38,6 +38,7 @@ const actions = {
     try {
       const author = await getAuthor(id);
       commit("setAuthor", author);
+      commit("setAuthorError", null)
     } catch (err) {
       commit("setAuthorError", {
         errType: "fetch author error",
@@ -49,8 +50,6 @@ const actions = {
   async fetchAuthors({ commit }) {
     try {
       const authors = await getAuthors();
-      console.log("fetch authors");
-      console.log(authors);
       commit("setAuthors", authors);
     } catch (err) {
       commit("setAuthorError", {
@@ -101,7 +100,7 @@ const actions = {
 const getters = {
   author: ({ author }) => author,
   authors: ({ authors }) => authors,
-  fetchAuthorError: ({ fetchAuthorError }) => fetchAuthorError,
+  authorError: ({ authorError }) => authorError,
 };
 
 export default {

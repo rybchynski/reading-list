@@ -42,6 +42,7 @@
         error: "bookError",
         authors: "authors",
         categories: "categories",
+        user: "user",
       }),
       updateAction: ({
         $route: {
@@ -81,6 +82,7 @@
             ...this.model,
             author: this.model.author._id,
             categories: this.model.categories.map((category) => category._id),
+            owner: this.user.id,
           };
           await this.updateBook({
             id: this.$route.params.id,
@@ -95,7 +97,11 @@
       },
       async onBookCreate() {
         try {
-          await this.createBook({ data: this.model });
+          const bookData = {
+            ...this.model,
+            owner: this.user.id,
+          };
+          await this.createBook({ data: bookData });
           this.$router.back();
           this.$info(`Book "${this.model.title}" was created successfully.`);
         } catch (err) {
