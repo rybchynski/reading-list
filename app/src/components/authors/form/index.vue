@@ -40,6 +40,7 @@
       ...mapGetters({
         author: "author",
         error: "authorError",
+        user: "user",
       }),
       updateAction: ({
         $route: {
@@ -74,6 +75,7 @@
         try {
           const updatedAuthor = {
             ...this.model,
+            owner: this.user.id,
           };
           await this.updateAuthor({
             id: this.$route.params.id,
@@ -88,7 +90,11 @@
       },
       async onAuthorCreate() {
         try {
-          await this.createAuthor({ data: this.model });
+          const authorData = {
+            ...this.model,
+            owner: this.user.id,
+          };
+          await this.createAuthor({ data: authorData });
           this.$router.back();
           this.$info(`Author "${this.model.name}" was successfully created.`);
         } catch (err) {

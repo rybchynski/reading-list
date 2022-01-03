@@ -200,4 +200,5 @@ export const defaultForm = {
   status: "",
   notation: false,
   done: false,
+  owner: null,
 };

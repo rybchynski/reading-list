@@ -34,4 +34,5 @@ export const formOptions = {
 export const defaultForm = {
   name: "",
   description: "",
+  owner: null,
 };

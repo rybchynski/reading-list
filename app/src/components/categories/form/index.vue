@@ -40,6 +40,7 @@
       ...mapGetters({
         category: "category",
         error: "categoryError",
+        user: "user",
       }),
       updateAction: ({
         $route: {
@@ -74,25 +75,30 @@
         try {
           const updatedCategory = {
             ...this.model,
+            owner: this.user.id,
           };
           await this.updateCategory({
             id: this.$route.params.id,
             data: updatedCategory,
           });
           this.$router.back();
-          this.$info(`Category "${this.model.name}" was successfully updated.`)
+          this.$info(`Category "${this.model.name}" was successfully updated.`);
         } catch (err) {
           this.error = err;
-          this.$error('Something went wrong.')
+          this.$error("Something went wrong.");
         }
       },
       async onCategoryCreate() {
         try {
-          await this.createCategory({ data: this.model });
+          const categoryData = {
+            ...this.model,
+            owner: this.user.id,
+          };
+          await this.createCategory({ data: categoryData });
           this.$router.back();
-          this.$info(`Category "${this.model.name}" was created successfully.`)
+          this.$info(`Category "${this.model.name}" was created successfully.`);
         } catch (err) {
-          this.$error('Something went wrong.')
+          this.$error("Something went wrong.");
           this.error = err;
         }
       },

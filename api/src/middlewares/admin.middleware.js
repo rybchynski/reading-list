@@ -19,6 +19,7 @@ module.exports = async (req, res, next) => {
       return next(ApiErrorsHandler.UnauthorizedError());
     }
 
+    // todo: check if userData has roles field (we do not need to use additional db query).
     const user = await User.findOne({ _id: userData.id });
     if (!user) {
       return next(ApiErrorsHandler.UnauthorizedError());
