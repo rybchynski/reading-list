@@ -25,7 +25,7 @@ export default {
 
 <style lang="scss" scoped>
 .app-main-layout {
-  height: 100vh;
+  height: 100%;
 }
 
 .app-page {
