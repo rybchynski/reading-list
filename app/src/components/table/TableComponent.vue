@@ -11,7 +11,7 @@
         </tr>
       </slot>
     </thead>
-    <tbody>
+    <transition-group name="slide-up" tag="tbody" appear>
       <tr v-for="(item, index) in data" :key="index">
         <slot :row="item">
           <table-cell>{{ index + 1 }}</table-cell>
@@ -56,12 +56,13 @@
           border-top: solid 1px rgb(178, 179, 187);
         "
         class="hide-on-med-and-down"
+        :key="data.length + 1"
       >
         <table-cell>
           <span class="total">Total: {{ data.length }}</span>
         </table-cell>
       </tr>
-    </tbody>
+    </transition-group>
   </table>
 </template>
 
@@ -120,5 +121,18 @@
 
   .total {
     font-weight: bold;
+  }
+
+  .slide-up-enter {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+
+  .slide-up-enter-active {
+    transition: all 0.4s ease;
+  }
+
+  .slide-up-move {
+    transition: transform 0.4s ease-in-out;
   }
 </style>

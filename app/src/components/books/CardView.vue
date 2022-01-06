@@ -1,15 +1,14 @@
 <template>
-  <div>
-      <transition-group name="book-list" class="books">
-        <div class="book-card-view" v-for="(book, id) in books" :key="id">
-          <BookCard :book="book" />
-        </div>
-      </transition-group>
+  <div class="books">
+    <div class="book-card-view" v-for="(book, id) in books" :key="id">
+      <BookCard :book="book" />
+    </div>
   </div>
 </template>
 
 <script>
   import BookCard from "@/components/books/BookCard.vue";
+  import gsap from "gsap";
 
   export default {
     components: {
@@ -21,6 +20,24 @@
         defalut: () => [],
       },
     },
+    methods: {
+      staggerBooks() {
+        gsap.from(".book-card-view", {
+          duration: 0.4,
+          opacity: 0,
+          scale: 0,
+          y: 200,
+          ease: "power1",
+          stagger: {
+            each: 0.1,
+            from: "random",
+          },
+        });
+      },
+    },
+    mounted() {
+      this.staggerBooks();
+    },
   };
 </script>
 
@@ -30,7 +47,6 @@
   .books {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    // grid-template-rows: repeat(4, 1fr);
     grid-column-gap: 10px;
     grid-row-gap: 10px;
   }
@@ -44,17 +60,5 @@
   .book-list-item {
     display: inline-block;
     margin-right: 10px;
-  }
-  .book-list-enter-active,
-  .book-list-leave-active {
-    transition: all .2s ease;
-  }
-  .book-list-enter-from,
-  .book-list-leave-to {
-    opacity: 0;
-    transform: translateX(130px);
-  }
-  .book-list-move {
-    transition: transform 0.4s ease;
   }
 </style>
