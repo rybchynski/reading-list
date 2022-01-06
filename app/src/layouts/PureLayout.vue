@@ -15,5 +15,3 @@ export default {
   name: "pure-layout",
 };
 </script>
-
-<style lang="scss" scoped></style>
